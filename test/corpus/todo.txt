@@ -1,0 +1,27 @@
+
+type my_type_t;
+type my_other_type_t;
+attribute my_attr;
+typeattribute my_type_t my_attr;
+
+role my_role_r types my_type_t;
+
+allow my_type_t my_other_type_t:file { read write execute };
+neverallow my_type_t my_other_type_t:file unlink;
+
+bool my_boolean false;
+
+# Macro usage
+interface(`my_prefix_do_something',`
+    allow $1 $2:file { getattr read };
+')
+
+# Conditional statement
+ifdef(`my_boolean', `
+    allow my_type_t my_other_type_t:file append;
+')
+
+# Complex construct with optional block
+optional_policy(`
+    role_transition my_type_t my_other_type_t:process my_new_role_r;
+')
