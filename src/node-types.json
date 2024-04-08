@@ -1,10 +1,10 @@
 [
   {
-    "type": "allow_rule",
+    "type": "argument",
     "named": true,
     "fields": {
-      "class": {
-        "multiple": false,
+      "arg": {
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -12,33 +12,19 @@
             "named": true
           }
         ]
-      },
-      "perms": {
-        "multiple": false,
+      }
+    }
+  },
+  {
+    "type": "arguments",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
         "required": true,
         "types": [
           {
-            "type": "permissions",
-            "named": true
-          }
-        ]
-      },
-      "source_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "target_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
+            "type": "argument",
             "named": true
           }
         ]
@@ -76,10 +62,41 @@
     }
   },
   {
-    "type": "neverallow_rule",
+    "type": "class",
     "named": true,
     "fields": {
       "class": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "classes",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "classes",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "macro_usage",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "arguments",
+            "named": true
+          }
+        ]
+      },
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -88,33 +105,19 @@
             "named": true
           }
         ]
-      },
-      "perms": {
-        "multiple": false,
+      }
+    }
+  },
+  {
+    "type": "permission",
+    "named": true,
+    "fields": {
+      "perm_set": {
+        "multiple": true,
         "required": true,
         "types": [
           {
             "type": "permissions",
-            "named": true
-          }
-        ]
-      },
-      "source_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "target_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -153,6 +156,67 @@
     }
   },
   {
+    "type": "rule_declaration",
+    "named": true,
+    "fields": {
+      "class": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "class",
+            "named": true
+          }
+        ]
+      },
+      "perm_set": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "permission",
+            "named": true
+          }
+        ]
+      },
+      "rule_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "rule_name",
+            "named": true
+          }
+        ]
+      },
+      "source_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      },
+      "target_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "rule_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -161,15 +225,11 @@
       "required": false,
       "types": [
         {
-          "type": "allow_rule",
-          "named": true
-        },
-        {
           "type": "boolean_declaration",
           "named": true
         },
         {
-          "type": "neverallow_rule",
+          "type": "macro_usage",
           "named": true
         },
         {
@@ -177,10 +237,30 @@
           "named": true
         },
         {
+          "type": "rule_declaration",
+          "named": true
+        },
+        {
           "type": "type_declaration",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "type",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -200,11 +280,59 @@
     }
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
   {
     "type": ";",
+    "named": false
+  },
+  {
+    "type": "accept",
+    "named": false
+  },
+  {
+    "type": "acceptfrom",
+    "named": false
+  },
+  {
+    "type": "acquire_svc",
+    "named": false
+  },
+  {
+    "type": "activegrab",
+    "named": false
+  },
+  {
+    "type": "add_name",
+    "named": false
+  },
+  {
+    "type": "addchild",
+    "named": false
+  },
+  {
+    "type": "admin",
     "named": false
   },
   {
@@ -216,7 +344,99 @@
     "named": false
   },
   {
+    "type": "appletalk_socket",
+    "named": false
+  },
+  {
+    "type": "assign",
+    "named": false
+  },
+  {
+    "type": "associate",
+    "named": false
+  },
+  {
+    "type": "association",
+    "named": false
+  },
+  {
+    "type": "audit_control",
+    "named": false
+  },
+  {
+    "type": "audit_write",
+    "named": false
+  },
+  {
+    "type": "auditallow",
+    "named": false
+  },
+  {
+    "type": "bell",
+    "named": false
+  },
+  {
+    "type": "bind",
+    "named": false
+  },
+  {
+    "type": "blk_file",
+    "named": false
+  },
+  {
     "type": "bool",
+    "named": false
+  },
+  {
+    "type": "capability",
+    "named": false
+  },
+  {
+    "type": "capability2",
+    "named": false
+  },
+  {
+    "type": "check_context",
+    "named": false
+  },
+  {
+    "type": "chfn",
+    "named": false
+  },
+  {
+    "type": "chown",
+    "named": false
+  },
+  {
+    "type": "chparent",
+    "named": false
+  },
+  {
+    "type": "chprop",
+    "named": false
+  },
+  {
+    "type": "chproplist",
+    "named": false
+  },
+  {
+    "type": "chr_file",
+    "named": false
+  },
+  {
+    "type": "chselection",
+    "named": false
+  },
+  {
+    "type": "chsh",
+    "named": false
+  },
+  {
+    "type": "chstack",
+    "named": false
+  },
+  {
+    "type": "clientcomevent",
     "named": false
   },
   {
@@ -224,7 +444,167 @@
     "named": true
   },
   {
+    "type": "compute_av",
+    "named": false
+  },
+  {
+    "type": "compute_create",
+    "named": false
+  },
+  {
+    "type": "compute_member",
+    "named": false
+  },
+  {
+    "type": "compute_relabel",
+    "named": false
+  },
+  {
+    "type": "compute_user",
+    "named": false
+  },
+  {
+    "type": "connect",
+    "named": false
+  },
+  {
+    "type": "connectto",
+    "named": false
+  },
+  {
+    "type": "context",
+    "named": false
+  },
+  {
+    "type": "copy",
+    "named": false
+  },
+  {
+    "type": "create",
+    "named": false
+  },
+  {
+    "type": "createglyph",
+    "named": false
+  },
+  {
+    "type": "crontab",
+    "named": false
+  },
+  {
+    "type": "ctrllife",
+    "named": false
+  },
+  {
+    "type": "dac_override",
+    "named": false
+  },
+  {
+    "type": "dac_read_search",
+    "named": false
+  },
+  {
+    "type": "db_blob",
+    "named": false
+  },
+  {
+    "type": "db_column",
+    "named": false
+  },
+  {
+    "type": "db_database",
+    "named": false
+  },
+  {
+    "type": "db_procedure",
+    "named": false
+  },
+  {
+    "type": "db_table",
+    "named": false
+  },
+  {
+    "type": "db_tuple",
+    "named": false
+  },
+  {
+    "type": "dbus",
+    "named": false
+  },
+  {
+    "type": "dccp_socket",
+    "named": false
+  },
+  {
+    "type": "destroy",
+    "named": false
+  },
+  {
+    "type": "dir",
+    "named": false
+  },
+  {
+    "type": "dontaudit",
+    "named": false
+  },
+  {
+    "type": "draw",
+    "named": false
+  },
+  {
+    "type": "drawevent",
+    "named": false
+  },
+  {
+    "type": "dyntransition",
+    "named": false
+  },
+  {
+    "type": "emutramp",
+    "named": false
+  },
+  {
+    "type": "enforce_dest",
+    "named": false
+  },
+  {
+    "type": "enqueue",
+    "named": false
+  },
+  {
+    "type": "entrypoint",
+    "named": false
+  },
+  {
+    "type": "enumerate",
+    "named": false
+  },
+  {
+    "type": "execheap",
+    "named": false
+  },
+  {
+    "type": "execmem",
+    "named": false
+  },
+  {
+    "type": "execmod",
+    "named": false
+  },
+  {
+    "type": "execstack",
+    "named": false
+  },
+  {
     "type": "execute",
+    "named": false
+  },
+  {
+    "type": "execute_no_trans",
+    "named": false
+  },
+  {
+    "type": "extensionevent",
     "named": false
   },
   {
@@ -232,7 +612,87 @@
     "named": false
   },
   {
+    "type": "fd",
+    "named": false
+  },
+  {
+    "type": "fifo_file",
+    "named": false
+  },
+  {
+    "type": "file",
+    "named": false
+  },
+  {
+    "type": "filesystem",
+    "named": false
+  },
+  {
+    "type": "fork",
+    "named": false
+  },
+  {
+    "type": "fowner",
+    "named": false
+  },
+  {
+    "type": "free",
+    "named": false
+  },
+  {
+    "type": "fsetid",
+    "named": false
+  },
+  {
     "type": "getattr",
+    "named": false
+  },
+  {
+    "type": "getcap",
+    "named": false
+  },
+  {
+    "type": "getfontpath",
+    "named": false
+  },
+  {
+    "type": "getgrp",
+    "named": false
+  },
+  {
+    "type": "gethost",
+    "named": false
+  },
+  {
+    "type": "gethostlist",
+    "named": false
+  },
+  {
+    "type": "getopt",
+    "named": false
+  },
+  {
+    "type": "getpgid",
+    "named": false
+  },
+  {
+    "type": "getpwd",
+    "named": false
+  },
+  {
+    "type": "getsched",
+    "named": false
+  },
+  {
+    "type": "getsession",
+    "named": false
+  },
+  {
+    "type": "getstat",
+    "named": false
+  },
+  {
+    "type": "grab",
     "named": false
   },
   {
@@ -240,7 +700,319 @@
     "named": true
   },
   {
+    "type": "inputevent",
+    "named": false
+  },
+  {
+    "type": "install",
+    "named": false
+  },
+  {
+    "type": "ioctl",
+    "named": false
+  },
+  {
+    "type": "ipc",
+    "named": false
+  },
+  {
+    "type": "ipc_info",
+    "named": false
+  },
+  {
+    "type": "ipc_lock",
+    "named": false
+  },
+  {
+    "type": "ipc_owner",
+    "named": false
+  },
+  {
+    "type": "kernel_service",
+    "named": false
+  },
+  {
+    "type": "key",
+    "named": false
+  },
+  {
+    "type": "key_socket",
+    "named": false
+  },
+  {
+    "type": "kill",
+    "named": false
+  },
+  {
+    "type": "lease",
+    "named": false
+  },
+  {
+    "type": "link",
+    "named": false
+  },
+  {
+    "type": "linux_immutable",
+    "named": false
+  },
+  {
+    "type": "list",
+    "named": false
+  },
+  {
+    "type": "listen",
+    "named": false
+  },
+  {
+    "type": "listprop",
+    "named": false
+  },
+  {
+    "type": "lnk_file",
+    "named": false
+  },
+  {
+    "type": "load",
+    "named": false
+  },
+  {
+    "type": "load_policy",
+    "named": false
+  },
+  {
+    "type": "lock",
+    "named": false
+  },
+  {
+    "type": "lookup",
+    "named": false
+  },
+  {
+    "type": "map",
+    "named": false
+  },
+  {
+    "type": "memprotect",
+    "named": false
+  },
+  {
+    "type": "mknod",
+    "named": false
+  },
+  {
+    "type": "mmap_zero",
+    "named": false
+  },
+  {
+    "type": "mount",
+    "named": false
+  },
+  {
+    "type": "mounton",
+    "named": false
+  },
+  {
+    "type": "mousemotion",
+    "named": false
+  },
+  {
+    "type": "move",
+    "named": false
+  },
+  {
+    "type": "mprotect",
+    "named": false
+  },
+  {
+    "type": "msg",
+    "named": false
+  },
+  {
+    "type": "msgq",
+    "named": false
+  },
+  {
+    "type": "name_bind",
+    "named": false
+  },
+  {
+    "type": "name_connect",
+    "named": false
+  },
+  {
+    "type": "net_admin",
+    "named": false
+  },
+  {
+    "type": "net_bind_service",
+    "named": false
+  },
+  {
+    "type": "net_broadcast",
+    "named": false
+  },
+  {
+    "type": "net_raw",
+    "named": false
+  },
+  {
+    "type": "netif",
+    "named": false
+  },
+  {
+    "type": "netlink_audit_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_dnrt_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_firewall_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_ip6fw_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_kobject_uevent_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_nflog_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_route_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_selinux_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_tcpdiag_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_xfrm_socket",
+    "named": false
+  },
+  {
     "type": "neverallow",
+    "named": false
+  },
+  {
+    "type": "newconn",
+    "named": false
+  },
+  {
+    "type": "nlmsg_read",
+    "named": false
+  },
+  {
+    "type": "nlmsg_readpriv",
+    "named": false
+  },
+  {
+    "type": "nlmsg_relay",
+    "named": false
+  },
+  {
+    "type": "nlmsg_write",
+    "named": false
+  },
+  {
+    "type": "noatsecure",
+    "named": false
+  },
+  {
+    "type": "node",
+    "named": false
+  },
+  {
+    "type": "node_bind",
+    "named": false
+  },
+  {
+    "type": "nscd",
+    "named": false
+  },
+  {
+    "type": "packet",
+    "named": false
+  },
+  {
+    "type": "packet_socket",
+    "named": false
+  },
+  {
+    "type": "pageexec",
+    "named": false
+  },
+  {
+    "type": "passivegrab",
+    "named": false
+  },
+  {
+    "type": "passwd",
+    "named": false
+  },
+  {
+    "type": "peer",
+    "named": false
+  },
+  {
+    "type": "polmatch",
+    "named": false
+  },
+  {
+    "type": "process",
+    "named": false
+  },
+  {
+    "type": "ptrace",
+    "named": false
+  },
+  {
+    "type": "query",
+    "named": false
+  },
+  {
+    "type": "quotaget",
+    "named": false
+  },
+  {
+    "type": "quotamod",
+    "named": false
+  },
+  {
+    "type": "quotaon",
+    "named": false
+  },
+  {
+    "type": "randexec",
+    "named": false
+  },
+  {
+    "type": "randmmap",
+    "named": false
+  },
+  {
+    "type": "rawip_recv",
+    "named": false
+  },
+  {
+    "type": "rawip_send",
+    "named": false
+  },
+  {
+    "type": "rawip_socket",
     "named": false
   },
   {
@@ -248,11 +1020,335 @@
     "named": false
   },
   {
+    "type": "receive",
+    "named": false
+  },
+  {
+    "type": "recv",
+    "named": false
+  },
+  {
+    "type": "recv_msg",
+    "named": false
+  },
+  {
+    "type": "recvfrom",
+    "named": false
+  },
+  {
+    "type": "relabelfrom",
+    "named": false
+  },
+  {
+    "type": "relabelinput",
+    "named": false
+  },
+  {
+    "type": "relabelto",
+    "named": false
+  },
+  {
+    "type": "remount",
+    "named": false
+  },
+  {
+    "type": "remove_name",
+    "named": false
+  },
+  {
+    "type": "rename",
+    "named": false
+  },
+  {
+    "type": "reparent",
+    "named": false
+  },
+  {
+    "type": "rlimitinh",
+    "named": false
+  },
+  {
+    "type": "rmdir",
+    "named": false
+  },
+  {
     "type": "role",
     "named": false
   },
   {
+    "type": "rootok",
+    "named": false
+  },
+  {
+    "type": "screensaver",
+    "named": false
+  },
+  {
+    "type": "search",
+    "named": false
+  },
+  {
+    "type": "security",
+    "named": false
+  },
+  {
+    "type": "segmexec",
+    "named": false
+  },
+  {
+    "type": "sem",
+    "named": false
+  },
+  {
+    "type": "send",
+    "named": false
+  },
+  {
+    "type": "send_msg",
+    "named": false
+  },
+  {
+    "type": "sendto",
+    "named": false
+  },
+  {
+    "type": "serverchangeevent",
+    "named": false
+  },
+  {
+    "type": "setattr",
+    "named": false
+  },
+  {
+    "type": "setbool",
+    "named": false
+  },
+  {
+    "type": "setcap",
+    "named": false
+  },
+  {
+    "type": "setcheckreqprot",
+    "named": false
+  },
+  {
+    "type": "setcontext",
+    "named": false
+  },
+  {
+    "type": "setcurrent",
+    "named": false
+  },
+  {
+    "type": "setenforce",
+    "named": false
+  },
+  {
+    "type": "setexec",
+    "named": false
+  },
+  {
+    "type": "setfocus",
+    "named": false
+  },
+  {
+    "type": "setfontpath",
+    "named": false
+  },
+  {
+    "type": "setfscreate",
+    "named": false
+  },
+  {
+    "type": "setgid",
+    "named": false
+  },
+  {
+    "type": "sethostlist",
+    "named": false
+  },
+  {
+    "type": "setkeycreate",
+    "named": false
+  },
+  {
+    "type": "setopt",
+    "named": false
+  },
+  {
+    "type": "setpcap",
+    "named": false
+  },
+  {
+    "type": "setpgid",
+    "named": false
+  },
+  {
+    "type": "setrlimit",
+    "named": false
+  },
+  {
+    "type": "setsched",
+    "named": false
+  },
+  {
+    "type": "setsecparam",
+    "named": false
+  },
+  {
+    "type": "setuid",
+    "named": false
+  },
+  {
+    "type": "share",
+    "named": false
+  },
+  {
+    "type": "shm",
+    "named": false
+  },
+  {
+    "type": "shmemgrp",
+    "named": false
+  },
+  {
+    "type": "shmemhost",
+    "named": false
+  },
+  {
+    "type": "shmempwd",
+    "named": false
+  },
+  {
+    "type": "shutdown",
+    "named": false
+  },
+  {
+    "type": "sigchld",
+    "named": false
+  },
+  {
+    "type": "siginh",
+    "named": false
+  },
+  {
+    "type": "sigkill",
+    "named": false
+  },
+  {
+    "type": "signal",
+    "named": false
+  },
+  {
+    "type": "signull",
+    "named": false
+  },
+  {
+    "type": "sigstop",
+    "named": false
+  },
+  {
+    "type": "sock_file",
+    "named": false
+  },
+  {
+    "type": "socket",
+    "named": false
+  },
+  {
+    "type": "store",
+    "named": false
+  },
+  {
+    "type": "swapon",
+    "named": false
+  },
+  {
+    "type": "sys_admin",
+    "named": false
+  },
+  {
+    "type": "sys_boot",
+    "named": false
+  },
+  {
+    "type": "sys_chroot",
+    "named": false
+  },
+  {
+    "type": "sys_module",
+    "named": false
+  },
+  {
+    "type": "sys_nice",
+    "named": false
+  },
+  {
+    "type": "sys_pacct",
+    "named": false
+  },
+  {
+    "type": "sys_ptrace",
+    "named": false
+  },
+  {
+    "type": "sys_rawio",
+    "named": false
+  },
+  {
+    "type": "sys_resource",
+    "named": false
+  },
+  {
+    "type": "sys_time",
+    "named": false
+  },
+  {
+    "type": "sys_tty_config",
+    "named": false
+  },
+  {
+    "type": "syslog_console",
+    "named": false
+  },
+  {
+    "type": "syslog_mod",
+    "named": false
+  },
+  {
+    "type": "syslog_read",
+    "named": false
+  },
+  {
+    "type": "system",
+    "named": false
+  },
+  {
+    "type": "tcp_recv",
+    "named": false
+  },
+  {
+    "type": "tcp_send",
+    "named": false
+  },
+  {
+    "type": "tcp_socket",
+    "named": false
+  },
+  {
+    "type": "transition",
+    "named": false
+  },
+  {
+    "type": "transparent",
+    "named": false
+  },
+  {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "tun_socket",
     "named": false
   },
   {
@@ -264,11 +1360,147 @@
     "named": false
   },
   {
+    "type": "udp_recv",
+    "named": false
+  },
+  {
+    "type": "udp_send",
+    "named": false
+  },
+  {
+    "type": "udp_socket",
+    "named": false
+  },
+  {
+    "type": "ungrab",
+    "named": false
+  },
+  {
+    "type": "uninstall",
+    "named": false
+  },
+  {
+    "type": "unix_dgram_socket",
+    "named": false
+  },
+  {
+    "type": "unix_read",
+    "named": false
+  },
+  {
+    "type": "unix_stream_socket",
+    "named": false
+  },
+  {
+    "type": "unix_write",
+    "named": false
+  },
+  {
     "type": "unlink",
     "named": false
   },
   {
+    "type": "unmap",
+    "named": false
+  },
+  {
+    "type": "unmount",
+    "named": false
+  },
+  {
+    "type": "use",
+    "named": false
+  },
+  {
+    "type": "view",
+    "named": false
+  },
+  {
+    "type": "warppointer",
+    "named": false
+  },
+  {
+    "type": "windowchangeevent",
+    "named": false
+  },
+  {
+    "type": "windowchangerequest",
+    "named": false
+  },
+  {
     "type": "write",
+    "named": false
+  },
+  {
+    "type": "x_application_data",
+    "named": false
+  },
+  {
+    "type": "x_client",
+    "named": false
+  },
+  {
+    "type": "x_colormap",
+    "named": false
+  },
+  {
+    "type": "x_cursor",
+    "named": false
+  },
+  {
+    "type": "x_device",
+    "named": false
+  },
+  {
+    "type": "x_drawable",
+    "named": false
+  },
+  {
+    "type": "x_event",
+    "named": false
+  },
+  {
+    "type": "x_extension",
+    "named": false
+  },
+  {
+    "type": "x_font",
+    "named": false
+  },
+  {
+    "type": "x_gc",
+    "named": false
+  },
+  {
+    "type": "x_keyboard",
+    "named": false
+  },
+  {
+    "type": "x_pointer",
+    "named": false
+  },
+  {
+    "type": "x_property",
+    "named": false
+  },
+  {
+    "type": "x_resource",
+    "named": false
+  },
+  {
+    "type": "x_screen",
+    "named": false
+  },
+  {
+    "type": "x_selection",
+    "named": false
+  },
+  {
+    "type": "x_server",
+    "named": false
+  },
+  {
+    "type": "x_synthetic_event",
     "named": false
   },
   {
@@ -277,6 +1509,10 @@
   },
   {
     "type": "}",
+    "named": false
+  },
+  {
+    "type": "~",
     "named": false
   }
 ]
