@@ -1,0 +1,142 @@
+=====
+allow
+=====
+
+allow initrc_t acct_exec_t:file { getattr read execute };
+allow kernel_t filesystem_type:filesystem mount;
+allow staff_t self:capability { setgid chown fowner };
+allow bootloader_t system_dbusd_t:dbus *;
+allow files_unconfined_type file_type:{ file chr_file } ~execmod;
+
+---
+
+(source_file
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)
+            (permissions)
+            (permissions)))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)
+            (permissions)
+            (permissions)))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes)
+            (classes))
+        (permission
+            (permissions))))
+
+=========
+dontaudit
+=========
+
+dontaudit initrc_t acct_exec_t:file { getattr read execute };
+
+---
+
+(source_file
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)
+            (permissions)
+            (permissions))))
+
+==========
+auditallow
+==========
+
+auditallow ada_t self:process execstack;
+
+---
+
+(source_file
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions))))
+
+==========
+neverallow
+==========
+
+neverallow ~can_read_shadow_passwords shadow_t:file read;
+neverallow { domain -mmap_low_domain_type } self:memprotect mmap_zero;
+
+---
+
+(source_file
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions)))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier)
+            (identifier))
+        (type
+            (identifier))
+        (class
+            (classes))
+        (permission
+            (permissions))))
