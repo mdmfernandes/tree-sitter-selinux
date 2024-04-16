@@ -1,5 +1,6 @@
 {
   "name": "selinux",
+  "word": "word",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -13,7 +14,47 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "macro_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro_usage"
+        },
+        {
+          "type": "SYMBOL",
           "name": "type_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "attribute_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expandattribute_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "typeattribute_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "typealias_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "permissive_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_transition_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_change_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_member_declaration"
         },
         {
           "type": "SYMBOL",
@@ -26,10 +67,6 @@
         {
           "type": "SYMBOL",
           "name": "boolean_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "macro_usage"
         }
       ]
     },
@@ -58,7 +95,78 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "type_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "alias"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "alias_id",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "FIELD",
+                  "name": "attribute_id",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "attribute_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "attribute"
+        },
+        {
+          "type": "FIELD",
+          "name": "attribute_id",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -67,6 +175,253 @@
         {
           "type": "STRING",
           "value": ";"
+        }
+      ]
+    },
+    "expandattribute_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "expandattribute"
+        },
+        {
+          "type": "FIELD",
+          "name": "attribute_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "expand_value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "boolean"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "typeattribute_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "typeattribute"
+        },
+        {
+          "type": "FIELD",
+          "name": "type_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "attribute_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "typealias_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "typealias"
+        },
+        {
+          "type": "FIELD",
+          "name": "type_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "alias"
+        },
+        {
+          "type": "FIELD",
+          "name": "alias_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "permissive_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "permissive"
+        },
+        {
+          "type": "FIELD",
+          "name": "type_id",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "type_transition_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "type_transition"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "target_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "class",
+          "content": {
+            "type": "SYMBOL",
+            "name": "classes"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "default_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "type_change_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "type_change"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "target_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "class",
+          "content": {
+            "type": "SYMBOL",
+            "name": "classes"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "change_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "type_member_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "type_member"
+        },
+        {
+          "type": "FIELD",
+          "name": "source_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "target_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "class",
+          "content": {
+            "type": "SYMBOL",
+            "name": "classes"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "member_type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         }
       ]
     },
@@ -150,8 +505,8 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "~"
+                  "type": "SYMBOL",
+                  "name": "complement"
                 },
                 {
                   "type": "BLANK"
@@ -182,8 +537,8 @@
                         "type": "CHOICE",
                         "members": [
                           {
-                            "type": "STRING",
-                            "value": "-"
+                            "type": "SYMBOL",
+                            "name": "negative"
                           },
                           {
                             "type": "BLANK"
@@ -216,8 +571,8 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "~"
+                  "type": "SYMBOL",
+                  "name": "complement"
                 },
                 {
                   "type": "BLANK"
@@ -246,8 +601,8 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "~"
+                  "type": "SYMBOL",
+                  "name": "complement"
                 },
                 {
                   "type": "BLANK"
@@ -295,8 +650,8 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "~"
+                  "type": "SYMBOL",
+                  "name": "complement"
                 },
                 {
                   "type": "BLANK"
@@ -380,24 +735,15 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "word"
           }
         },
         {
           "type": "FIELD",
           "name": "value",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "true"
-              },
-              {
-                "type": "STRING",
-                "value": "false"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "boolean"
           }
         },
         {
@@ -436,8 +782,8 @@
                         "type": "CHOICE",
                         "members": [
                           {
-                            "type": "STRING",
-                            "value": "-"
+                            "type": "SYMBOL",
+                            "name": "negative"
                           },
                           {
                             "type": "BLANK"
@@ -506,6 +852,76 @@
         }
       ]
     },
+    "macro_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "interface"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": "`"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "word"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "'"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "STRING",
+          "value": "`"
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "type_declaration"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "typeattribute_declaration"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "rule_declaration"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "macro_usage"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "'"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "macro_usage": {
       "type": "SEQ",
       "members": [
@@ -514,7 +930,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "word"
           }
         },
         {
@@ -543,9 +959,69 @@
         }
       ]
     },
-    "identifier": {
+    "negative": {
+      "type": "STRING",
+      "value": "-"
+    },
+    "complement": {
+      "type": "STRING",
+      "value": "~"
+    },
+    "boolean": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "false"
+        }
+      ]
+    },
+    "word": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
+      "value": "[a-zA-Z][a-zA-Z0-9_-]*"
+    },
+    "expansion": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "$"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[0-9]+"
+        }
+      ]
+    },
+    "identifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expansion"
+        }
+      ]
+    },
+    "permissions": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "*"
+        }
+      ]
     },
     "rule_name": {
       "type": "CHOICE",
@@ -585,6 +1061,18 @@
         },
         {
           "type": "STRING",
+          "value": "bpf"
+        },
+        {
+          "type": "STRING",
+          "value": "cap_userns"
+        },
+        {
+          "type": "STRING",
+          "value": "cap2_userns"
+        },
+        {
+          "type": "STRING",
           "value": "capability"
         },
         {
@@ -598,6 +1086,10 @@
         {
           "type": "STRING",
           "value": "dccp_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "dgram_socket_class_set"
         },
         {
           "type": "STRING",
@@ -721,11 +1213,19 @@
         },
         {
           "type": "STRING",
+          "value": "process2"
+        },
+        {
+          "type": "STRING",
           "value": "rawip_socket"
         },
         {
           "type": "STRING",
           "value": "security"
+        },
+        {
+          "type": "STRING",
+          "value": "service"
         },
         {
           "type": "STRING",
@@ -878,859 +1378,6 @@
         {
           "type": "STRING",
           "value": "x_synthetic_event"
-        }
-      ]
-    },
-    "permissions": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "*"
-        },
-        {
-          "type": "STRING",
-          "value": "accept"
-        },
-        {
-          "type": "STRING",
-          "value": "acceptfrom"
-        },
-        {
-          "type": "STRING",
-          "value": "acquire_svc"
-        },
-        {
-          "type": "STRING",
-          "value": "activegrab"
-        },
-        {
-          "type": "STRING",
-          "value": "add_name"
-        },
-        {
-          "type": "STRING",
-          "value": "addchild"
-        },
-        {
-          "type": "STRING",
-          "value": "admin"
-        },
-        {
-          "type": "STRING",
-          "value": "append"
-        },
-        {
-          "type": "STRING",
-          "value": "assign"
-        },
-        {
-          "type": "STRING",
-          "value": "associate"
-        },
-        {
-          "type": "STRING",
-          "value": "audit_control"
-        },
-        {
-          "type": "STRING",
-          "value": "audit_write"
-        },
-        {
-          "type": "STRING",
-          "value": "bell"
-        },
-        {
-          "type": "STRING",
-          "value": "bind"
-        },
-        {
-          "type": "STRING",
-          "value": "check_context"
-        },
-        {
-          "type": "STRING",
-          "value": "chfn"
-        },
-        {
-          "type": "STRING",
-          "value": "chown"
-        },
-        {
-          "type": "STRING",
-          "value": "chparent"
-        },
-        {
-          "type": "STRING",
-          "value": "chprop"
-        },
-        {
-          "type": "STRING",
-          "value": "chproplist"
-        },
-        {
-          "type": "STRING",
-          "value": "chselection"
-        },
-        {
-          "type": "STRING",
-          "value": "chsh"
-        },
-        {
-          "type": "STRING",
-          "value": "chstack"
-        },
-        {
-          "type": "STRING",
-          "value": "clientcomevent"
-        },
-        {
-          "type": "STRING",
-          "value": "compute_av"
-        },
-        {
-          "type": "STRING",
-          "value": "compute_create"
-        },
-        {
-          "type": "STRING",
-          "value": "compute_member"
-        },
-        {
-          "type": "STRING",
-          "value": "compute_relabel"
-        },
-        {
-          "type": "STRING",
-          "value": "compute_user"
-        },
-        {
-          "type": "STRING",
-          "value": "connect"
-        },
-        {
-          "type": "STRING",
-          "value": "connectto"
-        },
-        {
-          "type": "STRING",
-          "value": "copy"
-        },
-        {
-          "type": "STRING",
-          "value": "create"
-        },
-        {
-          "type": "STRING",
-          "value": "createglyph"
-        },
-        {
-          "type": "STRING",
-          "value": "crontab"
-        },
-        {
-          "type": "STRING",
-          "value": "ctrllife"
-        },
-        {
-          "type": "STRING",
-          "value": "dac_override"
-        },
-        {
-          "type": "STRING",
-          "value": "dac_read_search"
-        },
-        {
-          "type": "STRING",
-          "value": "destroy"
-        },
-        {
-          "type": "STRING",
-          "value": "draw"
-        },
-        {
-          "type": "STRING",
-          "value": "drawevent"
-        },
-        {
-          "type": "STRING",
-          "value": "dyntransition"
-        },
-        {
-          "type": "STRING",
-          "value": "emutramp"
-        },
-        {
-          "type": "STRING",
-          "value": "enforce_dest"
-        },
-        {
-          "type": "STRING",
-          "value": "enqueue"
-        },
-        {
-          "type": "STRING",
-          "value": "entrypoint"
-        },
-        {
-          "type": "STRING",
-          "value": "enumerate"
-        },
-        {
-          "type": "STRING",
-          "value": "execheap"
-        },
-        {
-          "type": "STRING",
-          "value": "execmem"
-        },
-        {
-          "type": "STRING",
-          "value": "execmod"
-        },
-        {
-          "type": "STRING",
-          "value": "execstack"
-        },
-        {
-          "type": "STRING",
-          "value": "execute"
-        },
-        {
-          "type": "STRING",
-          "value": "execute_no_trans"
-        },
-        {
-          "type": "STRING",
-          "value": "extensionevent"
-        },
-        {
-          "type": "STRING",
-          "value": "fork"
-        },
-        {
-          "type": "STRING",
-          "value": "fowner"
-        },
-        {
-          "type": "STRING",
-          "value": "free"
-        },
-        {
-          "type": "STRING",
-          "value": "fsetid"
-        },
-        {
-          "type": "STRING",
-          "value": "getattr"
-        },
-        {
-          "type": "STRING",
-          "value": "getcap"
-        },
-        {
-          "type": "STRING",
-          "value": "getfontpath"
-        },
-        {
-          "type": "STRING",
-          "value": "getgrp"
-        },
-        {
-          "type": "STRING",
-          "value": "gethost"
-        },
-        {
-          "type": "STRING",
-          "value": "gethostlist"
-        },
-        {
-          "type": "STRING",
-          "value": "getopt"
-        },
-        {
-          "type": "STRING",
-          "value": "getpgid"
-        },
-        {
-          "type": "STRING",
-          "value": "getpwd"
-        },
-        {
-          "type": "STRING",
-          "value": "getsched"
-        },
-        {
-          "type": "STRING",
-          "value": "getsession"
-        },
-        {
-          "type": "STRING",
-          "value": "getstat"
-        },
-        {
-          "type": "STRING",
-          "value": "grab"
-        },
-        {
-          "type": "STRING",
-          "value": "inputevent"
-        },
-        {
-          "type": "STRING",
-          "value": "install"
-        },
-        {
-          "type": "STRING",
-          "value": "ioctl"
-        },
-        {
-          "type": "STRING",
-          "value": "ipc_info"
-        },
-        {
-          "type": "STRING",
-          "value": "ipc_lock"
-        },
-        {
-          "type": "STRING",
-          "value": "ipc_owner"
-        },
-        {
-          "type": "STRING",
-          "value": "kill"
-        },
-        {
-          "type": "STRING",
-          "value": "lease"
-        },
-        {
-          "type": "STRING",
-          "value": "link"
-        },
-        {
-          "type": "STRING",
-          "value": "linux_immutable"
-        },
-        {
-          "type": "STRING",
-          "value": "list"
-        },
-        {
-          "type": "STRING",
-          "value": "listen"
-        },
-        {
-          "type": "STRING",
-          "value": "listprop"
-        },
-        {
-          "type": "STRING",
-          "value": "load"
-        },
-        {
-          "type": "STRING",
-          "value": "load_policy"
-        },
-        {
-          "type": "STRING",
-          "value": "lock"
-        },
-        {
-          "type": "STRING",
-          "value": "lookup"
-        },
-        {
-          "type": "STRING",
-          "value": "map"
-        },
-        {
-          "type": "STRING",
-          "value": "mknod"
-        },
-        {
-          "type": "STRING",
-          "value": "mmap_zero"
-        },
-        {
-          "type": "STRING",
-          "value": "mount"
-        },
-        {
-          "type": "STRING",
-          "value": "mounton"
-        },
-        {
-          "type": "STRING",
-          "value": "mousemotion"
-        },
-        {
-          "type": "STRING",
-          "value": "move"
-        },
-        {
-          "type": "STRING",
-          "value": "mprotect"
-        },
-        {
-          "type": "STRING",
-          "value": "name_bind"
-        },
-        {
-          "type": "STRING",
-          "value": "name_connect"
-        },
-        {
-          "type": "STRING",
-          "value": "net_admin"
-        },
-        {
-          "type": "STRING",
-          "value": "net_bind_service"
-        },
-        {
-          "type": "STRING",
-          "value": "net_broadcast"
-        },
-        {
-          "type": "STRING",
-          "value": "net_raw"
-        },
-        {
-          "type": "STRING",
-          "value": "newconn"
-        },
-        {
-          "type": "STRING",
-          "value": "nlmsg_read"
-        },
-        {
-          "type": "STRING",
-          "value": "nlmsg_readpriv"
-        },
-        {
-          "type": "STRING",
-          "value": "nlmsg_relay"
-        },
-        {
-          "type": "STRING",
-          "value": "nlmsg_write"
-        },
-        {
-          "type": "STRING",
-          "value": "noatsecure"
-        },
-        {
-          "type": "STRING",
-          "value": "node_bind"
-        },
-        {
-          "type": "STRING",
-          "value": "pageexec"
-        },
-        {
-          "type": "STRING",
-          "value": "passivegrab"
-        },
-        {
-          "type": "STRING",
-          "value": "passwd"
-        },
-        {
-          "type": "STRING",
-          "value": "polmatch"
-        },
-        {
-          "type": "STRING",
-          "value": "ptrace"
-        },
-        {
-          "type": "STRING",
-          "value": "query"
-        },
-        {
-          "type": "STRING",
-          "value": "quotaget"
-        },
-        {
-          "type": "STRING",
-          "value": "quotamod"
-        },
-        {
-          "type": "STRING",
-          "value": "quotaon"
-        },
-        {
-          "type": "STRING",
-          "value": "randexec"
-        },
-        {
-          "type": "STRING",
-          "value": "randmmap"
-        },
-        {
-          "type": "STRING",
-          "value": "rawip_recv"
-        },
-        {
-          "type": "STRING",
-          "value": "rawip_send"
-        },
-        {
-          "type": "STRING",
-          "value": "read"
-        },
-        {
-          "type": "STRING",
-          "value": "receive"
-        },
-        {
-          "type": "STRING",
-          "value": "recv"
-        },
-        {
-          "type": "STRING",
-          "value": "recv_msg"
-        },
-        {
-          "type": "STRING",
-          "value": "recvfrom"
-        },
-        {
-          "type": "STRING",
-          "value": "relabelfrom"
-        },
-        {
-          "type": "STRING",
-          "value": "relabelinput"
-        },
-        {
-          "type": "STRING",
-          "value": "relabelto"
-        },
-        {
-          "type": "STRING",
-          "value": "remount"
-        },
-        {
-          "type": "STRING",
-          "value": "remove_name"
-        },
-        {
-          "type": "STRING",
-          "value": "rename"
-        },
-        {
-          "type": "STRING",
-          "value": "reparent"
-        },
-        {
-          "type": "STRING",
-          "value": "rlimitinh"
-        },
-        {
-          "type": "STRING",
-          "value": "rmdir"
-        },
-        {
-          "type": "STRING",
-          "value": "rootok"
-        },
-        {
-          "type": "STRING",
-          "value": "screensaver"
-        },
-        {
-          "type": "STRING",
-          "value": "search"
-        },
-        {
-          "type": "STRING",
-          "value": "segmexec"
-        },
-        {
-          "type": "STRING",
-          "value": "send"
-        },
-        {
-          "type": "STRING",
-          "value": "send_msg"
-        },
-        {
-          "type": "STRING",
-          "value": "sendto"
-        },
-        {
-          "type": "STRING",
-          "value": "serverchangeevent"
-        },
-        {
-          "type": "STRING",
-          "value": "setattr"
-        },
-        {
-          "type": "STRING",
-          "value": "setbool"
-        },
-        {
-          "type": "STRING",
-          "value": "setcap"
-        },
-        {
-          "type": "STRING",
-          "value": "setcheckreqprot"
-        },
-        {
-          "type": "STRING",
-          "value": "setcontext"
-        },
-        {
-          "type": "STRING",
-          "value": "setcurrent"
-        },
-        {
-          "type": "STRING",
-          "value": "setenforce"
-        },
-        {
-          "type": "STRING",
-          "value": "setexec"
-        },
-        {
-          "type": "STRING",
-          "value": "setfocus"
-        },
-        {
-          "type": "STRING",
-          "value": "setfontpath"
-        },
-        {
-          "type": "STRING",
-          "value": "setfscreate"
-        },
-        {
-          "type": "STRING",
-          "value": "setgid"
-        },
-        {
-          "type": "STRING",
-          "value": "sethostlist"
-        },
-        {
-          "type": "STRING",
-          "value": "setkeycreate"
-        },
-        {
-          "type": "STRING",
-          "value": "setopt"
-        },
-        {
-          "type": "STRING",
-          "value": "setpcap"
-        },
-        {
-          "type": "STRING",
-          "value": "setpgid"
-        },
-        {
-          "type": "STRING",
-          "value": "setrlimit"
-        },
-        {
-          "type": "STRING",
-          "value": "setsched"
-        },
-        {
-          "type": "STRING",
-          "value": "setsecparam"
-        },
-        {
-          "type": "STRING",
-          "value": "setuid"
-        },
-        {
-          "type": "STRING",
-          "value": "share"
-        },
-        {
-          "type": "STRING",
-          "value": "shmemgrp"
-        },
-        {
-          "type": "STRING",
-          "value": "shmemhost"
-        },
-        {
-          "type": "STRING",
-          "value": "shmempwd"
-        },
-        {
-          "type": "STRING",
-          "value": "shutdown"
-        },
-        {
-          "type": "STRING",
-          "value": "sigchld"
-        },
-        {
-          "type": "STRING",
-          "value": "siginh"
-        },
-        {
-          "type": "STRING",
-          "value": "sigkill"
-        },
-        {
-          "type": "STRING",
-          "value": "signal"
-        },
-        {
-          "type": "STRING",
-          "value": "signull"
-        },
-        {
-          "type": "STRING",
-          "value": "sigstop"
-        },
-        {
-          "type": "STRING",
-          "value": "store"
-        },
-        {
-          "type": "STRING",
-          "value": "swapon"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_admin"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_boot"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_chroot"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_module"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_nice"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_pacct"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_ptrace"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_rawio"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_resource"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_time"
-        },
-        {
-          "type": "STRING",
-          "value": "sys_tty_config"
-        },
-        {
-          "type": "STRING",
-          "value": "syslog_console"
-        },
-        {
-          "type": "STRING",
-          "value": "syslog_mod"
-        },
-        {
-          "type": "STRING",
-          "value": "syslog_read"
-        },
-        {
-          "type": "STRING",
-          "value": "tcp_recv"
-        },
-        {
-          "type": "STRING",
-          "value": "tcp_send"
-        },
-        {
-          "type": "STRING",
-          "value": "transition"
-        },
-        {
-          "type": "STRING",
-          "value": "transparent"
-        },
-        {
-          "type": "STRING",
-          "value": "udp_recv"
-        },
-        {
-          "type": "STRING",
-          "value": "udp_send"
-        },
-        {
-          "type": "STRING",
-          "value": "ungrab"
-        },
-        {
-          "type": "STRING",
-          "value": "uninstall"
-        },
-        {
-          "type": "STRING",
-          "value": "unix_read"
-        },
-        {
-          "type": "STRING",
-          "value": "unix_write"
-        },
-        {
-          "type": "STRING",
-          "value": "unlink"
-        },
-        {
-          "type": "STRING",
-          "value": "unmap"
-        },
-        {
-          "type": "STRING",
-          "value": "unmount"
-        },
-        {
-          "type": "STRING",
-          "value": "use"
-        },
-        {
-          "type": "STRING",
-          "value": "view"
-        },
-        {
-          "type": "STRING",
-          "value": "warppointer"
-        },
-        {
-          "type": "STRING",
-          "value": "windowchangeevent"
-        },
-        {
-          "type": "STRING",
-          "value": "windowchangerequest"
-        },
-        {
-          "type": "STRING",
-          "value": "write"
         }
       ]
     }

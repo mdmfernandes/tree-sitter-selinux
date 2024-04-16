@@ -9,16 +9,8 @@
   "}"
 ] @punctuation.bracket
 
-[
-  ";"
-] @punctuation.delimiter
 
-[
- ":"
- "~"
- "-"
- ; "--"
-] @operator
+";" @punctuation.delimiter
 
 [
   "true"
@@ -26,25 +18,42 @@
 ] @boolean
 
 [
-  ; "alias"
-  ; "attribute"
+  "alias"
+  "attribute"
   "bool"
+  "expandattribute"
   ; "dominance"
+  "permissive"
   "role"
   ; "roles"
   "type"
-  ; "type_change"
-  ; "type_transition"
-  ; "typealias"
-  ; "typeattribute"
+  "type_change"
+  "type_member"
+  "type_transition"
+  "typealias"
+  "typeattribute"
   "types"
   ; "user"
 ] @keyword
+
+"interface" @keyword.function
+
+[
+ ":"
+ (complement)
+ (negative)
+] @operator
+
+(expansion) @variable.parameter
+; "$" @punctuation.special) @none
 
 
 (classes) @type.builtin
 (permissions) @attribute
 (rule_name) @keyword
+
+(macro_declaration
+  name: (word) @function)
 
 (type
   (identifier) @variable)
@@ -54,13 +63,19 @@
   (#eq? @variable.builtin "self"))
 
 (macro_usage
-    name: (identifier) @function)
+    name: (word) @function)
 
 (arguments
     argument: (argument) @variable)
 
 (type_declaration
-    name: (identifier) @variable)
+    (identifier) @variable)
+
+(attribute_declaration
+    attribute_id: (identifier) @variable)
+
+(permissive_declaration
+    type_id: (identifier) @variable)
 
 (boolean_declaration
-    name: (identifier) @variable)
+    (boolean) @variable)
