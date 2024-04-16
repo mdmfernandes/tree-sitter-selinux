@@ -1,0 +1,17 @@
+================
+Type declaration
+================
+
+type basic_t;
+type basic_exec_t;
+
+---
+
+(source_file
+    (type_declaration
+        (identifier
+            (word)))
+    (type_declaration
+        (identifier
+            (word))))
+

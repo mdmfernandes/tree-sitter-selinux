@@ -6,7 +6,7 @@ module.exports = grammar({
     $.comment,
   ],
 
-  // word: ($) => $.identifier,
+  word: ($) => $.word,
 
   // externals: ($) => [
   //     // Mark comments as external tokens so that the external scanner is always
@@ -23,21 +23,147 @@ module.exports = grammar({
   //     "}",
   // ],
   rules: {
+    // INFO:
+    // gen_require inside macros
+    // highlit of `'. Match?
+
+    // TODO:
+    // interface macro
+    // type_transition (should work for domains and objects)
+    // User statements
+    // Role statements: role, attribute_role, roleattribute, allow, role_transition
+    // Type statements: type, attribute, expandattribute, typeattribute, typealias, permissive, tye_transition,
+    //                  type_change, type_member
+    // Bounds rules: typebounds
+    // Extended rules
+    // Object class
+    // Conditional statements: bool, if/else
+    // Constraint statements: constrain, validatetrans, mlsconstrain, mlsvalidatetrans
+    // MLS statements. Good for Android
+    // SID statement
+    // Filesystem labeling statements
+    // Modular policy support statements: module, require, optional
+    // File context configuration files (*.fc)
+
     source_file: ($) => repeat($._definition),
 
     _definition: ($) =>
       choice(
+        $.macro_declaration,
+        $.macro_usage,
+        // Type statements
         $.type_declaration,
+        $.attribute_declaration,
+        $.expandattribute_declaration,
+        $.typeattribute_declaration,
+        $.typealias_declaration,
+        $.permissive_declaration,
+        $.type_transition_declaration,
+        $.type_change_declaration,
+        $.type_member_declaration,
+        // ...
         $.role_declaration,
         $.rule_declaration,
         $.boolean_declaration,
-        $.macro_usage,
       ),
 
     comment: ($) => token(seq("#", /.*/)),
 
-    type_declaration: ($) => seq("type", field("name", $.identifier), ";"),
+    /*
+     * Type statements
+     */
+    // TODO: add tests for type statements. See examples in the SELinux notebook
+    // Improve the highlights
 
+    type_declaration: ($) =>
+      seq(
+        "type",
+        field("type_id", $.identifier),
+        // TODO: add support for multiple alias, separated by {}
+        optional(seq("alias", field("alias_id", $.identifier))),
+        // TODO: add support for multiple attributes
+        optional(seq(",", field("attribute_id", $.identifier))),
+        ";",
+      ),
+
+    attribute_declaration: ($) =>
+      seq("attribute", field("attribute_id", $.identifier), ";"),
+
+    expandattribute_declaration: ($) =>
+      // TODO: add support for multiple attributes
+      seq(
+        "expandattribute",
+        field("attribute_id", $.identifier),
+        field("expand_value", $.boolean),
+        ";",
+      ),
+
+    typeattribute_declaration: ($) =>
+      seq(
+        "typeattribute",
+        field("type_id", $.identifier),
+        // TODO: add support for multiple attributes
+        field("attribute_id", $.identifier),
+        ";",
+      ),
+
+    typealias_declaration: ($) =>
+      seq(
+        "typealias",
+        field("type_id", $.identifier),
+        "alias",
+        // TODO: add support for multiple alias
+        field("alias_id", $.identifier),
+        ";",
+      ),
+
+    permissive_declaration: ($) =>
+      seq("permissive", field("type_id", $.identifier), ";"),
+
+    type_transition_declaration: ($) =>
+      seq(
+        "type_transition",
+        // TODO: add support for multiple types
+        field("source_type", $.identifier),
+        // TODO: add support for multiple types
+        field("target_type", $.identifier),
+        ":",
+        // TODO: add support for multiple classes
+        field("class", $.classes),
+        field("default_type", $.identifier),
+        // WARN: This is causing conflict
+        // optional(field("object_name", $.identifier)),
+      ),
+
+    type_change_declaration: ($) =>
+      seq(
+        "type_change",
+        // TODO: add support for multiple types
+        field("source_type", $.identifier),
+        // TODO: add support for multiple types
+        field("target_type", $.identifier),
+        ":",
+        // TODO: add support for multiple classes
+        field("class", $.classes),
+        field("change_type", $.identifier),
+      ),
+
+    type_member_declaration: ($) =>
+      seq(
+        "type_member",
+        // TODO: add support for multiple types
+        field("source_type", $.identifier),
+        // TODO: add support for multiple types
+        field("target_type", $.identifier),
+        ":",
+        // TODO: add support for multiple classes
+        field("class", $.classes),
+        field("member_type", $.identifier),
+      ),
+
+    /*
+     * ...
+     */
     role_declaration: ($) =>
       seq(
         "role",
@@ -56,21 +182,21 @@ module.exports = grammar({
     type: ($) =>
       choice(
         seq(
-          optional("~"),
+          optional($.complement),
           "{",
           seq(
             field("type", $.identifier),
-            repeat1(seq(optional("-"), field("type", $.identifier))),
+            repeat1(seq(optional($.negative), field("type", $.identifier))),
           ),
           "}",
         ),
-        seq(optional("~"), field("type", $.identifier)),
+        seq(optional($.complement), field("type", $.identifier)),
       ),
 
     permission: ($) =>
       choice(
         seq(
-          optional("~"),
+          optional($.complement),
           "{",
           seq(
             field("perm_set", $.permissions),
@@ -78,7 +204,7 @@ module.exports = grammar({
           ),
           "}",
         ),
-        seq(optional("~"), field("perm_set", $.permissions)),
+        seq(optional($.complement), field("perm_set", $.permissions)),
       ),
 
     // https://selinuxproject.org/page/AVCRules
@@ -94,12 +220,7 @@ module.exports = grammar({
       ),
 
     boolean_declaration: ($) =>
-      seq(
-        "bool",
-        field("name", $.identifier),
-        field("value", choice("true", "false")),
-        ";",
-      ),
+      seq("bool", field("name", $.word), field("value", $.boolean), ";"),
 
     argument: ($) =>
       choice(
@@ -107,7 +228,7 @@ module.exports = grammar({
           "{",
           seq(
             field("arg", $.identifier),
-            repeat1(seq(optional("-"), field("arg", $.identifier))),
+            repeat1(seq(optional($.negative), field("arg", $.identifier))),
           ),
           "}",
         ),
@@ -120,15 +241,45 @@ module.exports = grammar({
         repeat(seq(",", field("argument", $.argument))),
       ),
 
+    macro_declaration: ($) =>
+      seq(
+        "interface",
+        "(",
+        "`",
+        field("name", $.word),
+        "'",
+        ",",
+        "`",
+        field(
+          "body",
+          choice(
+            $.type_declaration,
+            $.typeattribute_declaration,
+            $.rule_declaration,
+            $.macro_usage,
+          ),
+        ),
+        "'",
+        ")",
+      ),
+
     macro_usage: ($) =>
       seq(
-        field("name", $.identifier),
+        field("name", $.word),
         "(",
         field("arguments", optional($.arguments)),
         ")",
       ),
 
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    negative: ($) => "-",
+    complement: ($) => "~",
+    boolean: ($) => choice("true", "false"),
+
+    word: ($) => /[a-zA-Z][a-zA-Z0-9_-]*/,
+    expansion: ($) => seq("$", /[0-9]+/),
+    identifier: ($) => choice($.word, $.expansion),
+
+    permissions: ($) => choice($.identifier, "*"),
 
     rule_name: ($) => choice("allow", "auditallow", "dontaudit", "neverallow"),
 
@@ -139,10 +290,14 @@ module.exports = grammar({
         "appletalk_socket",
         "association",
         "blk_file",
+        "bpf",
+        "cap_userns",
+        "cap2_userns",
         "capability",
         "capability2",
         "chr_file",
         "dccp_socket",
+        "dgram_socket_class_set",
         "dir",
         "fd",
         "fifo_file",
@@ -173,8 +328,10 @@ module.exports = grammar({
         "packet_socket",
         "peer",
         "process",
+        "process2",
         "rawip_socket",
         "security",
+        "service",
         "sem",
         "shm",
         "sock_file",
@@ -213,223 +370,6 @@ module.exports = grammar({
         "x_selection",
         "x_server",
         "x_synthetic_event",
-      ),
-
-    // https://github.com/SELinuxProject/selinux/blob/main/python/sepolgen/src/share/perm_map
-    permissions: ($) =>
-      choice(
-        "*",
-        "accept",
-        "acceptfrom",
-        "acquire_svc",
-        "activegrab",
-        "add_name",
-        "addchild",
-        "admin",
-        "append",
-        "assign",
-        "associate",
-        "audit_control",
-        "audit_write",
-        "bell",
-        "bind",
-        "check_context",
-        "chfn",
-        "chown",
-        "chparent",
-        "chprop",
-        "chproplist",
-        "chselection",
-        "chsh",
-        "chstack",
-        "clientcomevent",
-        "compute_av",
-        "compute_create",
-        "compute_member",
-        "compute_relabel",
-        "compute_user",
-        "connect",
-        "connectto",
-        "copy",
-        "create",
-        "createglyph",
-        "crontab",
-        "ctrllife",
-        "dac_override",
-        "dac_read_search",
-        "destroy",
-        "draw",
-        "drawevent",
-        "dyntransition",
-        "emutramp",
-        "enforce_dest",
-        "enqueue",
-        "entrypoint",
-        "enumerate",
-        "execheap",
-        "execmem",
-        "execmod",
-        "execstack",
-        "execute",
-        "execute_no_trans",
-        "extensionevent",
-        "fork",
-        "fowner",
-        "free",
-        "fsetid",
-        "getattr",
-        "getcap",
-        "getfontpath",
-        "getgrp",
-        "gethost",
-        "gethostlist",
-        "getopt",
-        "getpgid",
-        "getpwd",
-        "getsched",
-        "getsession",
-        "getstat",
-        "grab",
-        "inputevent",
-        "install",
-        "ioctl",
-        "ipc_info",
-        "ipc_lock",
-        "ipc_owner",
-        "kill",
-        "lease",
-        "link",
-        "linux_immutable",
-        "list",
-        "listen",
-        "listprop",
-        "load",
-        "load_policy",
-        "lock",
-        "lookup",
-        "map",
-        "mknod",
-        "mmap_zero",
-        "mount",
-        "mounton",
-        "mousemotion",
-        "move",
-        "mprotect",
-        "name_bind",
-        "name_connect",
-        "net_admin",
-        "net_bind_service",
-        "net_broadcast",
-        "net_raw",
-        "newconn",
-        "nlmsg_read",
-        "nlmsg_readpriv",
-        "nlmsg_relay",
-        "nlmsg_write",
-        "noatsecure",
-        "node_bind",
-        "pageexec",
-        "passivegrab",
-        "passwd",
-        "polmatch",
-        "ptrace",
-        "query",
-        "quotaget",
-        "quotamod",
-        "quotaon",
-        "randexec",
-        "randmmap",
-        "rawip_recv",
-        "rawip_send",
-        "read",
-        "receive",
-        "recv",
-        "recv_msg",
-        "recvfrom",
-        "relabelfrom",
-        "relabelinput",
-        "relabelto",
-        "remount",
-        "remove_name",
-        "rename",
-        "reparent",
-        "rlimitinh",
-        "rmdir",
-        "rootok",
-        "screensaver",
-        "search",
-        "segmexec",
-        "send",
-        "send_msg",
-        "sendto",
-        "serverchangeevent",
-        "setattr",
-        "setbool",
-        "setcap",
-        "setcheckreqprot",
-        "setcontext",
-        "setcurrent",
-        "setenforce",
-        "setexec",
-        "setfocus",
-        "setfontpath",
-        "setfscreate",
-        "setgid",
-        "sethostlist",
-        "setkeycreate",
-        "setopt",
-        "setpcap",
-        "setpgid",
-        "setrlimit",
-        "setsched",
-        "setsecparam",
-        "setuid",
-        "share",
-        "shmemgrp",
-        "shmemhost",
-        "shmempwd",
-        "shutdown",
-        "sigchld",
-        "siginh",
-        "sigkill",
-        "signal",
-        "signull",
-        "sigstop",
-        "store",
-        "swapon",
-        "sys_admin",
-        "sys_boot",
-        "sys_chroot",
-        "sys_module",
-        "sys_nice",
-        "sys_pacct",
-        "sys_ptrace",
-        "sys_rawio",
-        "sys_resource",
-        "sys_time",
-        "sys_tty_config",
-        "syslog_console",
-        "syslog_mod",
-        "syslog_read",
-        "tcp_recv",
-        "tcp_send",
-        "transition",
-        "transparent",
-        "udp_recv",
-        "udp_send",
-        "ungrab",
-        "uninstall",
-        "unix_read",
-        "unix_write",
-        "unlink",
-        "unmap",
-        "unmount",
-        "use",
-        "view",
-        "warppointer",
-        "windowchangeevent",
-        "windowchangerequest",
-        "write",
       ),
   },
 });

@@ -14,58 +14,85 @@ allow files_unconfined_type file_type:{ file chr_file } ~execmod;
     (rule_declaration
         (rule_name)
         (type
-            (identifier))
+            (identifier
+                (word)))
         (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes))
         (permission
-            (permissions)
-            (permissions)
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word)))))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (permission
+            (permissions
+                (identifier
+                    (word)))))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (permission
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word)))))
+    (rule_declaration
+        (rule_name)
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (permission
             (permissions)))
     (rule_declaration
         (rule_name)
         (type
-            (identifier))
+            (identifier
+                (word)))
         (type
-            (identifier))
-        (class
-            (classes))
-        (permission
-            (permissions)))
-    (rule_declaration
-        (rule_name)
-        (type
-            (identifier))
-        (type
-            (identifier))
-        (class
-            (classes))
-        (permission
-            (permissions)
-            (permissions)
-            (permissions)))
-    (rule_declaration
-        (rule_name)
-        (type
-            (identifier))
-        (type
-            (identifier))
-        (class
-            (classes))
-        (permission
-            (permissions)))
-    (rule_declaration
-        (rule_name)
-        (type
-            (identifier))
-        (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes)
             (classes))
         (permission
-            (permissions))))
+            (complement)
+            (permissions
+                (identifier
+                    (word))))))
 
 =========
 dontaudit
@@ -79,15 +106,23 @@ dontaudit initrc_t acct_exec_t:file { getattr read execute };
     (rule_declaration
         (rule_name)
         (type
-            (identifier))
+            (identifier
+                (word)))
         (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes))
         (permission
-            (permissions)
-            (permissions)
-            (permissions))))
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word)))
+            (permissions
+                (identifier
+                    (word))))))
 
 ==========
 auditallow
@@ -101,13 +136,17 @@ auditallow ada_t self:process execstack;
     (rule_declaration
         (rule_name)
         (type
-            (identifier))
+            (identifier
+                (word)))
         (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes))
         (permission
-            (permissions))))
+            (permissions
+                (identifier
+                    (word))))))
 
 ==========
 neverallow
@@ -122,21 +161,32 @@ neverallow { domain -mmap_low_domain_type } self:memprotect mmap_zero;
     (rule_declaration
         (rule_name)
         (type
-            (identifier))
+            (complement)
+            (identifier
+                (word)))
         (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes))
         (permission
-            (permissions)))
+            (permissions
+                (identifier
+                    (word)))))
     (rule_declaration
         (rule_name)
         (type
-            (identifier)
-            (identifier))
+            (identifier
+                (word))
+                (negative)
+            (identifier
+                (word)))
         (type
-            (identifier))
+            (identifier
+                (word)))
         (class
             (classes))
         (permission
-            (permissions))))
+            (permissions
+                (identifier
+                    (word))))))

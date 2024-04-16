@@ -1,6 +1,6 @@
 # Tree-sitter grammar for SELinux
 
-## Set in Neovim
+## Set in Neovim for local development
 
 ### Install
 
@@ -28,9 +28,22 @@ parsers](https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#a
 
 ### Highlights
 
-The queries must be added to the Neovim runtime directory:
+The queries must be added to the nvim-treesitter runtime directory:
 
 ```bash
 cd ~/.local/share/nvim/lazy/nvim-treesitter/queries
 ln -s ~/src/tree-sitter-selinux/queries ./selinux
 ```
+
+### Text objects
+
+The queries must be added to the nvim-treesitter-textobjects runtime directory:
+
+```bash
+cd ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries
+ln -s ~/src/tree-sitter-selinux/queries ./selinux
+```
+
+## References
+
+- [The SELinux Notebook](https://github.com/SELinuxProject/selinux-notebook)

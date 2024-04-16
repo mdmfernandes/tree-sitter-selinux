@@ -13,6 +13,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "negative",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -32,6 +42,27 @@
     }
   },
   {
+    "type": "attribute_declaration",
+    "named": true,
+    "fields": {
+      "attribute_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "boolean_declaration",
     "named": true,
     "fields": {
@@ -40,7 +71,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "word",
             "named": true
           }
         ]
@@ -50,12 +81,8 @@
         "required": true,
         "types": [
           {
-            "type": "false",
-            "named": false
-          },
-          {
-            "type": "true",
-            "named": false
+            "type": "boolean",
+            "named": true
           }
         ]
       }
@@ -83,6 +110,94 @@
     "fields": {}
   },
   {
+    "type": "expandattribute_declaration",
+    "named": true,
+    "fields": {
+      "attribute_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "expand_value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "boolean",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "expansion",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        },
+        {
+          "type": "word",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macro_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macro_usage",
+            "named": true
+          },
+          {
+            "type": "rule_declaration",
+            "named": true
+          },
+          {
+            "type": "type_declaration",
+            "named": true
+          },
+          {
+            "type": "typeattribute_declaration",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "word",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "macro_usage",
     "named": true,
     "fields": {
@@ -101,7 +216,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "word",
             "named": true
           }
         ]
@@ -122,12 +237,48 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "complement",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "permissions",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "permissive_declaration",
+    "named": true,
+    "fields": {
+      "type_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "role_declaration",
@@ -225,11 +376,27 @@
       "required": false,
       "types": [
         {
+          "type": "attribute_declaration",
+          "named": true
+        },
+        {
           "type": "boolean_declaration",
           "named": true
         },
         {
+          "type": "expandattribute_declaration",
+          "named": true
+        },
+        {
+          "type": "macro_declaration",
+          "named": true
+        },
+        {
           "type": "macro_usage",
+          "named": true
+        },
+        {
+          "type": "permissive_declaration",
           "named": true
         },
         {
@@ -241,7 +408,27 @@
           "named": true
         },
         {
+          "type": "type_change_declaration",
+          "named": true
+        },
+        {
           "type": "type_declaration",
+          "named": true
+        },
+        {
+          "type": "type_member_declaration",
+          "named": true
+        },
+        {
+          "type": "type_transition_declaration",
+          "named": true
+        },
+        {
+          "type": "typealias_declaration",
+          "named": true
+        },
+        {
+          "type": "typeattribute_declaration",
           "named": true
         }
       ]
@@ -261,13 +448,57 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "complement",
+          "named": true
+        },
+        {
+          "type": "negative",
+          "named": true
+        }
+      ]
     }
   },
   {
-    "type": "type_declaration",
+    "type": "type_change_declaration",
     "named": true,
     "fields": {
-      "name": {
+      "change_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "class": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "classes",
+            "named": true
+          }
+        ]
+      },
+      "source_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target_type": {
         "multiple": false,
         "required": true,
         "types": [
@@ -278,6 +509,194 @@
         ]
       }
     }
+  },
+  {
+    "type": "type_declaration",
+    "named": true,
+    "fields": {
+      "alias_id": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "attribute_id": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "type_member_declaration",
+    "named": true,
+    "fields": {
+      "class": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "classes",
+            "named": true
+          }
+        ]
+      },
+      "member_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "source_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "type_transition_declaration",
+    "named": true,
+    "fields": {
+      "class": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "classes",
+            "named": true
+          }
+        ]
+      },
+      "default_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "source_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "typealias_declaration",
+    "named": true,
+    "fields": {
+      "alias_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "typeattribute_declaration",
+    "named": true,
+    "fields": {
+      "attribute_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
   },
   {
     "type": "(",
@@ -296,10 +715,6 @@
     "named": false
   },
   {
-    "type": "-",
-    "named": false
-  },
-  {
     "type": ":",
     "named": false
   },
@@ -308,31 +723,11 @@
     "named": false
   },
   {
-    "type": "accept",
+    "type": "`",
     "named": false
   },
   {
-    "type": "acceptfrom",
-    "named": false
-  },
-  {
-    "type": "acquire_svc",
-    "named": false
-  },
-  {
-    "type": "activegrab",
-    "named": false
-  },
-  {
-    "type": "add_name",
-    "named": false
-  },
-  {
-    "type": "addchild",
-    "named": false
-  },
-  {
-    "type": "admin",
+    "type": "alias",
     "named": false
   },
   {
@@ -340,19 +735,7 @@
     "named": false
   },
   {
-    "type": "append",
-    "named": false
-  },
-  {
     "type": "appletalk_socket",
-    "named": false
-  },
-  {
-    "type": "assign",
-    "named": false
-  },
-  {
-    "type": "associate",
     "named": false
   },
   {
@@ -360,23 +743,11 @@
     "named": false
   },
   {
-    "type": "audit_control",
-    "named": false
-  },
-  {
-    "type": "audit_write",
+    "type": "attribute",
     "named": false
   },
   {
     "type": "auditallow",
-    "named": false
-  },
-  {
-    "type": "bell",
-    "named": false
-  },
-  {
-    "type": "bind",
     "named": false
   },
   {
@@ -388,6 +759,18 @@
     "named": false
   },
   {
+    "type": "bpf",
+    "named": false
+  },
+  {
+    "type": "cap2_userns",
+    "named": false
+  },
+  {
+    "type": "cap_userns",
+    "named": false
+  },
+  {
     "type": "capability",
     "named": false
   },
@@ -396,47 +779,7 @@
     "named": false
   },
   {
-    "type": "check_context",
-    "named": false
-  },
-  {
-    "type": "chfn",
-    "named": false
-  },
-  {
-    "type": "chown",
-    "named": false
-  },
-  {
-    "type": "chparent",
-    "named": false
-  },
-  {
-    "type": "chprop",
-    "named": false
-  },
-  {
-    "type": "chproplist",
-    "named": false
-  },
-  {
     "type": "chr_file",
-    "named": false
-  },
-  {
-    "type": "chselection",
-    "named": false
-  },
-  {
-    "type": "chsh",
-    "named": false
-  },
-  {
-    "type": "chstack",
-    "named": false
-  },
-  {
-    "type": "clientcomevent",
     "named": false
   },
   {
@@ -444,63 +787,11 @@
     "named": true
   },
   {
-    "type": "compute_av",
-    "named": false
-  },
-  {
-    "type": "compute_create",
-    "named": false
-  },
-  {
-    "type": "compute_member",
-    "named": false
-  },
-  {
-    "type": "compute_relabel",
-    "named": false
-  },
-  {
-    "type": "compute_user",
-    "named": false
-  },
-  {
-    "type": "connect",
-    "named": false
-  },
-  {
-    "type": "connectto",
-    "named": false
+    "type": "complement",
+    "named": true
   },
   {
     "type": "context",
-    "named": false
-  },
-  {
-    "type": "copy",
-    "named": false
-  },
-  {
-    "type": "create",
-    "named": false
-  },
-  {
-    "type": "createglyph",
-    "named": false
-  },
-  {
-    "type": "crontab",
-    "named": false
-  },
-  {
-    "type": "ctrllife",
-    "named": false
-  },
-  {
-    "type": "dac_override",
-    "named": false
-  },
-  {
-    "type": "dac_read_search",
     "named": false
   },
   {
@@ -536,7 +827,7 @@
     "named": false
   },
   {
-    "type": "destroy",
+    "type": "dgram_socket_class_set",
     "named": false
   },
   {
@@ -548,63 +839,7 @@
     "named": false
   },
   {
-    "type": "draw",
-    "named": false
-  },
-  {
-    "type": "drawevent",
-    "named": false
-  },
-  {
-    "type": "dyntransition",
-    "named": false
-  },
-  {
-    "type": "emutramp",
-    "named": false
-  },
-  {
-    "type": "enforce_dest",
-    "named": false
-  },
-  {
-    "type": "enqueue",
-    "named": false
-  },
-  {
-    "type": "entrypoint",
-    "named": false
-  },
-  {
-    "type": "enumerate",
-    "named": false
-  },
-  {
-    "type": "execheap",
-    "named": false
-  },
-  {
-    "type": "execmem",
-    "named": false
-  },
-  {
-    "type": "execmod",
-    "named": false
-  },
-  {
-    "type": "execstack",
-    "named": false
-  },
-  {
-    "type": "execute",
-    "named": false
-  },
-  {
-    "type": "execute_no_trans",
-    "named": false
-  },
-  {
-    "type": "extensionevent",
+    "type": "expandattribute",
     "named": false
   },
   {
@@ -628,103 +863,11 @@
     "named": false
   },
   {
-    "type": "fork",
-    "named": false
-  },
-  {
-    "type": "fowner",
-    "named": false
-  },
-  {
-    "type": "free",
-    "named": false
-  },
-  {
-    "type": "fsetid",
-    "named": false
-  },
-  {
-    "type": "getattr",
-    "named": false
-  },
-  {
-    "type": "getcap",
-    "named": false
-  },
-  {
-    "type": "getfontpath",
-    "named": false
-  },
-  {
-    "type": "getgrp",
-    "named": false
-  },
-  {
-    "type": "gethost",
-    "named": false
-  },
-  {
-    "type": "gethostlist",
-    "named": false
-  },
-  {
-    "type": "getopt",
-    "named": false
-  },
-  {
-    "type": "getpgid",
-    "named": false
-  },
-  {
-    "type": "getpwd",
-    "named": false
-  },
-  {
-    "type": "getsched",
-    "named": false
-  },
-  {
-    "type": "getsession",
-    "named": false
-  },
-  {
-    "type": "getstat",
-    "named": false
-  },
-  {
-    "type": "grab",
-    "named": false
-  },
-  {
-    "type": "identifier",
-    "named": true
-  },
-  {
-    "type": "inputevent",
-    "named": false
-  },
-  {
-    "type": "install",
-    "named": false
-  },
-  {
-    "type": "ioctl",
+    "type": "interface",
     "named": false
   },
   {
     "type": "ipc",
-    "named": false
-  },
-  {
-    "type": "ipc_info",
-    "named": false
-  },
-  {
-    "type": "ipc_lock",
-    "named": false
-  },
-  {
-    "type": "ipc_owner",
     "named": false
   },
   {
@@ -740,87 +883,11 @@
     "named": false
   },
   {
-    "type": "kill",
-    "named": false
-  },
-  {
-    "type": "lease",
-    "named": false
-  },
-  {
-    "type": "link",
-    "named": false
-  },
-  {
-    "type": "linux_immutable",
-    "named": false
-  },
-  {
-    "type": "list",
-    "named": false
-  },
-  {
-    "type": "listen",
-    "named": false
-  },
-  {
-    "type": "listprop",
-    "named": false
-  },
-  {
     "type": "lnk_file",
     "named": false
   },
   {
-    "type": "load",
-    "named": false
-  },
-  {
-    "type": "load_policy",
-    "named": false
-  },
-  {
-    "type": "lock",
-    "named": false
-  },
-  {
-    "type": "lookup",
-    "named": false
-  },
-  {
-    "type": "map",
-    "named": false
-  },
-  {
     "type": "memprotect",
-    "named": false
-  },
-  {
-    "type": "mknod",
-    "named": false
-  },
-  {
-    "type": "mmap_zero",
-    "named": false
-  },
-  {
-    "type": "mount",
-    "named": false
-  },
-  {
-    "type": "mounton",
-    "named": false
-  },
-  {
-    "type": "mousemotion",
-    "named": false
-  },
-  {
-    "type": "move",
-    "named": false
-  },
-  {
-    "type": "mprotect",
     "named": false
   },
   {
@@ -832,28 +899,8 @@
     "named": false
   },
   {
-    "type": "name_bind",
-    "named": false
-  },
-  {
-    "type": "name_connect",
-    "named": false
-  },
-  {
-    "type": "net_admin",
-    "named": false
-  },
-  {
-    "type": "net_bind_service",
-    "named": false
-  },
-  {
-    "type": "net_broadcast",
-    "named": false
-  },
-  {
-    "type": "net_raw",
-    "named": false
+    "type": "negative",
+    "named": true
   },
   {
     "type": "netif",
@@ -908,35 +955,7 @@
     "named": false
   },
   {
-    "type": "newconn",
-    "named": false
-  },
-  {
-    "type": "nlmsg_read",
-    "named": false
-  },
-  {
-    "type": "nlmsg_readpriv",
-    "named": false
-  },
-  {
-    "type": "nlmsg_relay",
-    "named": false
-  },
-  {
-    "type": "nlmsg_write",
-    "named": false
-  },
-  {
-    "type": "noatsecure",
-    "named": false
-  },
-  {
     "type": "node",
-    "named": false
-  },
-  {
-    "type": "node_bind",
     "named": false
   },
   {
@@ -952,14 +971,6 @@
     "named": false
   },
   {
-    "type": "pageexec",
-    "named": false
-  },
-  {
-    "type": "passivegrab",
-    "named": false
-  },
-  {
     "type": "passwd",
     "named": false
   },
@@ -968,7 +979,7 @@
     "named": false
   },
   {
-    "type": "polmatch",
+    "type": "permissive",
     "named": false
   },
   {
@@ -976,39 +987,7 @@
     "named": false
   },
   {
-    "type": "ptrace",
-    "named": false
-  },
-  {
-    "type": "query",
-    "named": false
-  },
-  {
-    "type": "quotaget",
-    "named": false
-  },
-  {
-    "type": "quotamod",
-    "named": false
-  },
-  {
-    "type": "quotaon",
-    "named": false
-  },
-  {
-    "type": "randexec",
-    "named": false
-  },
-  {
-    "type": "randmmap",
-    "named": false
-  },
-  {
-    "type": "rawip_recv",
-    "named": false
-  },
-  {
-    "type": "rawip_send",
+    "type": "process2",
     "named": false
   },
   {
@@ -1016,75 +995,7 @@
     "named": false
   },
   {
-    "type": "read",
-    "named": false
-  },
-  {
-    "type": "receive",
-    "named": false
-  },
-  {
-    "type": "recv",
-    "named": false
-  },
-  {
-    "type": "recv_msg",
-    "named": false
-  },
-  {
-    "type": "recvfrom",
-    "named": false
-  },
-  {
-    "type": "relabelfrom",
-    "named": false
-  },
-  {
-    "type": "relabelinput",
-    "named": false
-  },
-  {
-    "type": "relabelto",
-    "named": false
-  },
-  {
-    "type": "remount",
-    "named": false
-  },
-  {
-    "type": "remove_name",
-    "named": false
-  },
-  {
-    "type": "rename",
-    "named": false
-  },
-  {
-    "type": "reparent",
-    "named": false
-  },
-  {
-    "type": "rlimitinh",
-    "named": false
-  },
-  {
-    "type": "rmdir",
-    "named": false
-  },
-  {
     "type": "role",
-    "named": false
-  },
-  {
-    "type": "rootok",
-    "named": false
-  },
-  {
-    "type": "screensaver",
-    "named": false
-  },
-  {
-    "type": "search",
     "named": false
   },
   {
@@ -1092,159 +1003,15 @@
     "named": false
   },
   {
-    "type": "segmexec",
-    "named": false
-  },
-  {
     "type": "sem",
     "named": false
   },
   {
-    "type": "send",
-    "named": false
-  },
-  {
-    "type": "send_msg",
-    "named": false
-  },
-  {
-    "type": "sendto",
-    "named": false
-  },
-  {
-    "type": "serverchangeevent",
-    "named": false
-  },
-  {
-    "type": "setattr",
-    "named": false
-  },
-  {
-    "type": "setbool",
-    "named": false
-  },
-  {
-    "type": "setcap",
-    "named": false
-  },
-  {
-    "type": "setcheckreqprot",
-    "named": false
-  },
-  {
-    "type": "setcontext",
-    "named": false
-  },
-  {
-    "type": "setcurrent",
-    "named": false
-  },
-  {
-    "type": "setenforce",
-    "named": false
-  },
-  {
-    "type": "setexec",
-    "named": false
-  },
-  {
-    "type": "setfocus",
-    "named": false
-  },
-  {
-    "type": "setfontpath",
-    "named": false
-  },
-  {
-    "type": "setfscreate",
-    "named": false
-  },
-  {
-    "type": "setgid",
-    "named": false
-  },
-  {
-    "type": "sethostlist",
-    "named": false
-  },
-  {
-    "type": "setkeycreate",
-    "named": false
-  },
-  {
-    "type": "setopt",
-    "named": false
-  },
-  {
-    "type": "setpcap",
-    "named": false
-  },
-  {
-    "type": "setpgid",
-    "named": false
-  },
-  {
-    "type": "setrlimit",
-    "named": false
-  },
-  {
-    "type": "setsched",
-    "named": false
-  },
-  {
-    "type": "setsecparam",
-    "named": false
-  },
-  {
-    "type": "setuid",
-    "named": false
-  },
-  {
-    "type": "share",
+    "type": "service",
     "named": false
   },
   {
     "type": "shm",
-    "named": false
-  },
-  {
-    "type": "shmemgrp",
-    "named": false
-  },
-  {
-    "type": "shmemhost",
-    "named": false
-  },
-  {
-    "type": "shmempwd",
-    "named": false
-  },
-  {
-    "type": "shutdown",
-    "named": false
-  },
-  {
-    "type": "sigchld",
-    "named": false
-  },
-  {
-    "type": "siginh",
-    "named": false
-  },
-  {
-    "type": "sigkill",
-    "named": false
-  },
-  {
-    "type": "signal",
-    "named": false
-  },
-  {
-    "type": "signull",
-    "named": false
-  },
-  {
-    "type": "sigstop",
     "named": false
   },
   {
@@ -1256,91 +1023,11 @@
     "named": false
   },
   {
-    "type": "store",
-    "named": false
-  },
-  {
-    "type": "swapon",
-    "named": false
-  },
-  {
-    "type": "sys_admin",
-    "named": false
-  },
-  {
-    "type": "sys_boot",
-    "named": false
-  },
-  {
-    "type": "sys_chroot",
-    "named": false
-  },
-  {
-    "type": "sys_module",
-    "named": false
-  },
-  {
-    "type": "sys_nice",
-    "named": false
-  },
-  {
-    "type": "sys_pacct",
-    "named": false
-  },
-  {
-    "type": "sys_ptrace",
-    "named": false
-  },
-  {
-    "type": "sys_rawio",
-    "named": false
-  },
-  {
-    "type": "sys_resource",
-    "named": false
-  },
-  {
-    "type": "sys_time",
-    "named": false
-  },
-  {
-    "type": "sys_tty_config",
-    "named": false
-  },
-  {
-    "type": "syslog_console",
-    "named": false
-  },
-  {
-    "type": "syslog_mod",
-    "named": false
-  },
-  {
-    "type": "syslog_read",
-    "named": false
-  },
-  {
     "type": "system",
     "named": false
   },
   {
-    "type": "tcp_recv",
-    "named": false
-  },
-  {
-    "type": "tcp_send",
-    "named": false
-  },
-  {
     "type": "tcp_socket",
-    "named": false
-  },
-  {
-    "type": "transition",
-    "named": false
-  },
-  {
-    "type": "transparent",
     "named": false
   },
   {
@@ -1356,15 +1043,27 @@
     "named": false
   },
   {
+    "type": "type_change",
+    "named": false
+  },
+  {
+    "type": "type_member",
+    "named": false
+  },
+  {
+    "type": "type_transition",
+    "named": false
+  },
+  {
+    "type": "typealias",
+    "named": false
+  },
+  {
+    "type": "typeattribute",
+    "named": false
+  },
+  {
     "type": "types",
-    "named": false
-  },
-  {
-    "type": "udp_recv",
-    "named": false
-  },
-  {
-    "type": "udp_send",
     "named": false
   },
   {
@@ -1372,19 +1071,7 @@
     "named": false
   },
   {
-    "type": "ungrab",
-    "named": false
-  },
-  {
-    "type": "uninstall",
-    "named": false
-  },
-  {
     "type": "unix_dgram_socket",
-    "named": false
-  },
-  {
-    "type": "unix_read",
     "named": false
   },
   {
@@ -1392,44 +1079,8 @@
     "named": false
   },
   {
-    "type": "unix_write",
-    "named": false
-  },
-  {
-    "type": "unlink",
-    "named": false
-  },
-  {
-    "type": "unmap",
-    "named": false
-  },
-  {
-    "type": "unmount",
-    "named": false
-  },
-  {
-    "type": "use",
-    "named": false
-  },
-  {
-    "type": "view",
-    "named": false
-  },
-  {
-    "type": "warppointer",
-    "named": false
-  },
-  {
-    "type": "windowchangeevent",
-    "named": false
-  },
-  {
-    "type": "windowchangerequest",
-    "named": false
-  },
-  {
-    "type": "write",
-    "named": false
+    "type": "word",
+    "named": true
   },
   {
     "type": "x_application_data",
@@ -1509,10 +1160,6 @@
   },
   {
     "type": "}",
-    "named": false
-  },
-  {
-    "type": "~",
     "named": false
   }
 ]

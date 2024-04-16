@@ -1,0 +1,75 @@
+===========
+Macro usage
+===========
+
+policy_module(basic)
+
+macro1(basic_t)
+macro2(basic_t, basic_exec_t)
+macro3(basic_t, basic_exec_t, basic_exec_t)
+
+---
+
+
+(source_file
+    (macro_usage
+        (word)
+        (arguments
+            (argument
+                (identifier
+                    (word)))))
+    (macro_usage
+        (word)
+        (arguments
+            (argument
+                (identifier
+                    (word)))))
+    (macro_usage
+        (word)
+        (arguments
+            (argument
+                (identifier
+                    (word)))
+            (argument
+                (identifier
+                    (word)))))
+    (macro_usage
+        (word)
+        (arguments
+            (argument
+                (identifier
+                    (word)))
+            (argument
+                (identifier
+                    (word)))
+            (argument
+                (identifier
+                    (word))))))
+
+=================
+Macro declaration
+=================
+
+interface(`allow_libcod_access',`
+    typeattribute $1 libcod_access;
+
+    allow_rvp_variant_access($1)
+')
+
+---
+
+(source_file
+    (macro_declaration
+        (word)
+        (ERROR
+        (typeattribute_declaration
+            (identifier
+                (expansion))
+            (identifier
+            (word))))
+        (macro_usage
+            (word)
+            (arguments
+                (argument
+                    (identifier
+                        (expansion)))))))
