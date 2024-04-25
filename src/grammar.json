@@ -116,7 +116,7 @@
                   "name": "alias_id",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "identifier"
+                    "name": "alias"
                   }
                 }
               ]
@@ -127,29 +127,24 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": ","
-                },
-                {
-                  "type": "FIELD",
-                  "name": "attribute_id",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "FIELD",
+                "name": "attribute_id",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
                 }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+              }
+            ]
+          }
         },
         {
           "type": "STRING",
@@ -190,7 +185,7 @@
           "name": "attribute_id",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "attribute"
           }
         },
         {
@@ -231,6 +226,26 @@
           }
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "FIELD",
+                "name": "attribute_id",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "STRING",
           "value": ";"
         }
@@ -260,7 +275,7 @@
           "name": "alias_id",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "alias"
           }
         },
         {
@@ -302,7 +317,7 @@
           "name": "source_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -310,7 +325,7 @@
           "name": "target_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -322,7 +337,7 @@
           "name": "class",
           "content": {
             "type": "SYMBOL",
-            "name": "classes"
+            "name": "class"
           }
         },
         {
@@ -332,6 +347,26 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "object_name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -347,7 +382,7 @@
           "name": "source_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -355,7 +390,7 @@
           "name": "target_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -367,7 +402,7 @@
           "name": "class",
           "content": {
             "type": "SYMBOL",
-            "name": "classes"
+            "name": "class"
           }
         },
         {
@@ -377,6 +412,10 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -392,7 +431,7 @@
           "name": "source_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -400,7 +439,7 @@
           "name": "target_type",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "type"
           }
         },
         {
@@ -412,7 +451,7 @@
           "name": "class",
           "content": {
             "type": "SYMBOL",
-            "name": "classes"
+            "name": "class"
           }
         },
         {
@@ -422,6 +461,10 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -588,6 +631,90 @@
               }
             }
           ]
+        }
+      ]
+    },
+    "alias": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT1",
+                  "content": {
+                    "type": "FIELD",
+                    "name": "alias",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "alias",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "attribute": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT1",
+                  "content": {
+                    "type": "FIELD",
+                    "name": "attribute",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "attribute",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         }
       ]
     },
@@ -1049,11 +1176,19 @@
       "members": [
         {
           "type": "STRING",
+          "value": "anon_inode"
+        },
+        {
+          "type": "STRING",
           "value": "appletalk_socket"
         },
         {
           "type": "STRING",
           "value": "association"
+        },
+        {
+          "type": "STRING",
+          "value": "binder"
         },
         {
           "type": "STRING",
@@ -1065,11 +1200,11 @@
         },
         {
           "type": "STRING",
-          "value": "cap_userns"
+          "value": "cap2_userns"
         },
         {
           "type": "STRING",
-          "value": "cap2_userns"
+          "value": "cap_userns"
         },
         {
           "type": "STRING",
@@ -1085,11 +1220,55 @@
         },
         {
           "type": "STRING",
-          "value": "dccp_socket"
+          "value": "context"
         },
         {
           "type": "STRING",
-          "value": "dgram_socket_class_set"
+          "value": "db_blob"
+        },
+        {
+          "type": "STRING",
+          "value": "db_column"
+        },
+        {
+          "type": "STRING",
+          "value": "db_database"
+        },
+        {
+          "type": "STRING",
+          "value": "db_language"
+        },
+        {
+          "type": "STRING",
+          "value": "db_procedure"
+        },
+        {
+          "type": "STRING",
+          "value": "db_schema"
+        },
+        {
+          "type": "STRING",
+          "value": "db_sequence"
+        },
+        {
+          "type": "STRING",
+          "value": "db_table"
+        },
+        {
+          "type": "STRING",
+          "value": "db_tuple"
+        },
+        {
+          "type": "STRING",
+          "value": "db_view"
+        },
+        {
+          "type": "STRING",
+          "value": "dbus"
+        },
+        {
+          "type": "STRING",
+          "value": "dccp_socket"
         },
         {
           "type": "STRING",
@@ -1113,6 +1292,22 @@
         },
         {
           "type": "STRING",
+          "value": "icmp_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "infiniband_endport"
+        },
+        {
+          "type": "STRING",
+          "value": "infiniband_pkey"
+        },
+        {
+          "type": "STRING",
+          "value": "io_uring"
+        },
+        {
+          "type": "STRING",
           "value": "ipc"
         },
         {
@@ -1133,6 +1328,10 @@
         },
         {
           "type": "STRING",
+          "value": "lockdown"
+        },
+        {
+          "type": "STRING",
           "value": "memprotect"
         },
         {
@@ -1149,11 +1348,15 @@
         },
         {
           "type": "STRING",
-          "value": "netlink_socket"
+          "value": "netlink_audit_socket"
         },
         {
           "type": "STRING",
-          "value": "netlink_audit_socket"
+          "value": "netlink_connector_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "netlink_crypto_socket"
         },
         {
           "type": "STRING",
@@ -1161,7 +1364,15 @@
         },
         {
           "type": "STRING",
+          "value": "netlink_fib_lookup_socket"
+        },
+        {
+          "type": "STRING",
           "value": "netlink_firewall_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "netlink_generic_socket"
         },
         {
           "type": "STRING",
@@ -1169,7 +1380,15 @@
         },
         {
           "type": "STRING",
+          "value": "netlink_iscsi_socket"
+        },
+        {
+          "type": "STRING",
           "value": "netlink_kobject_uevent_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "netlink_netfilter_socket"
         },
         {
           "type": "STRING",
@@ -1177,11 +1396,23 @@
         },
         {
           "type": "STRING",
+          "value": "netlink_rdma_socket"
+        },
+        {
+          "type": "STRING",
           "value": "netlink_route_socket"
         },
         {
           "type": "STRING",
+          "value": "netlink_scsitransport_socket"
+        },
+        {
+          "type": "STRING",
           "value": "netlink_selinux_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "netlink_socket"
         },
         {
           "type": "STRING",
@@ -1197,6 +1428,10 @@
         },
         {
           "type": "STRING",
+          "value": "nscd"
+        },
+        {
+          "type": "STRING",
           "value": "packet"
         },
         {
@@ -1205,7 +1440,15 @@
         },
         {
           "type": "STRING",
+          "value": "passwd"
+        },
+        {
+          "type": "STRING",
           "value": "peer"
+        },
+        {
+          "type": "STRING",
+          "value": "perf_event"
         },
         {
           "type": "STRING",
@@ -1217,7 +1460,15 @@
         },
         {
           "type": "STRING",
+          "value": "proxy"
+        },
+        {
+          "type": "STRING",
           "value": "rawip_socket"
+        },
+        {
+          "type": "STRING",
+          "value": "sctp_socket"
         },
         {
           "type": "STRING",
@@ -1225,11 +1476,11 @@
         },
         {
           "type": "STRING",
-          "value": "service"
+          "value": "sem"
         },
         {
           "type": "STRING",
-          "value": "sem"
+          "value": "service"
         },
         {
           "type": "STRING",
@@ -1269,43 +1520,7 @@
         },
         {
           "type": "STRING",
-          "value": "db_blob"
-        },
-        {
-          "type": "STRING",
-          "value": "db_column"
-        },
-        {
-          "type": "STRING",
-          "value": "db_database"
-        },
-        {
-          "type": "STRING",
-          "value": "db_procedure"
-        },
-        {
-          "type": "STRING",
-          "value": "db_table"
-        },
-        {
-          "type": "STRING",
-          "value": "db_tuple"
-        },
-        {
-          "type": "STRING",
-          "value": "dbus"
-        },
-        {
-          "type": "STRING",
-          "value": "context"
-        },
-        {
-          "type": "STRING",
-          "value": "nscd"
-        },
-        {
-          "type": "STRING",
-          "value": "passwd"
+          "value": "user_namespace"
         },
         {
           "type": "STRING",

@@ -1,5 +1,21 @@
 [
   {
+    "type": "alias",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "argument",
     "named": true,
     "fields": {
@@ -35,6 +51,22 @@
         "types": [
           {
             "type": "argument",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "attribute",
+    "named": true,
+    "fields": {
+      "attribute": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -118,7 +150,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "attribute",
             "named": true
           }
         ]
@@ -483,7 +515,7 @@
         "required": true,
         "types": [
           {
-            "type": "classes",
+            "type": "class",
             "named": true
           }
         ]
@@ -493,7 +525,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -503,7 +535,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -519,13 +551,13 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "alias",
             "named": true
           }
         ]
       },
       "attribute_id": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -555,7 +587,7 @@
         "required": true,
         "types": [
           {
-            "type": "classes",
+            "type": "class",
             "named": true
           }
         ]
@@ -575,7 +607,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -585,7 +617,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -601,7 +633,7 @@
         "required": true,
         "types": [
           {
-            "type": "classes",
+            "type": "class",
             "named": true
           }
         ]
@@ -616,12 +648,22 @@
           }
         ]
       },
+      "object_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "source_type": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -631,7 +673,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "type",
             "named": true
           }
         ]
@@ -647,7 +689,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "alias",
             "named": true
           }
         ]
@@ -669,7 +711,7 @@
     "named": true,
     "fields": {
       "attribute_id": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -735,6 +777,10 @@
     "named": false
   },
   {
+    "type": "anon_inode",
+    "named": false
+  },
+  {
     "type": "appletalk_socket",
     "named": false
   },
@@ -748,6 +794,10 @@
   },
   {
     "type": "auditallow",
+    "named": false
+  },
+  {
+    "type": "binder",
     "named": false
   },
   {
@@ -807,7 +857,19 @@
     "named": false
   },
   {
+    "type": "db_language",
+    "named": false
+  },
+  {
     "type": "db_procedure",
+    "named": false
+  },
+  {
+    "type": "db_schema",
+    "named": false
+  },
+  {
+    "type": "db_sequence",
     "named": false
   },
   {
@@ -819,15 +881,15 @@
     "named": false
   },
   {
+    "type": "db_view",
+    "named": false
+  },
+  {
     "type": "dbus",
     "named": false
   },
   {
     "type": "dccp_socket",
-    "named": false
-  },
-  {
-    "type": "dgram_socket_class_set",
     "named": false
   },
   {
@@ -863,7 +925,23 @@
     "named": false
   },
   {
+    "type": "icmp_socket",
+    "named": false
+  },
+  {
+    "type": "infiniband_endport",
+    "named": false
+  },
+  {
+    "type": "infiniband_pkey",
+    "named": false
+  },
+  {
     "type": "interface",
+    "named": false
+  },
+  {
+    "type": "io_uring",
     "named": false
   },
   {
@@ -884,6 +962,10 @@
   },
   {
     "type": "lnk_file",
+    "named": false
+  },
+  {
+    "type": "lockdown",
     "named": false
   },
   {
@@ -911,7 +993,19 @@
     "named": false
   },
   {
+    "type": "netlink_connector_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_crypto_socket",
+    "named": false
+  },
+  {
     "type": "netlink_dnrt_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_fib_lookup_socket",
     "named": false
   },
   {
@@ -919,7 +1013,15 @@
     "named": false
   },
   {
+    "type": "netlink_generic_socket",
+    "named": false
+  },
+  {
     "type": "netlink_ip6fw_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_iscsi_socket",
     "named": false
   },
   {
@@ -927,11 +1029,23 @@
     "named": false
   },
   {
+    "type": "netlink_netfilter_socket",
+    "named": false
+  },
+  {
     "type": "netlink_nflog_socket",
     "named": false
   },
   {
+    "type": "netlink_rdma_socket",
+    "named": false
+  },
+  {
     "type": "netlink_route_socket",
+    "named": false
+  },
+  {
+    "type": "netlink_scsitransport_socket",
     "named": false
   },
   {
@@ -979,6 +1093,10 @@
     "named": false
   },
   {
+    "type": "perf_event",
+    "named": false
+  },
+  {
     "type": "permissive",
     "named": false
   },
@@ -991,11 +1109,19 @@
     "named": false
   },
   {
+    "type": "proxy",
+    "named": false
+  },
+  {
     "type": "rawip_socket",
     "named": false
   },
   {
     "type": "role",
+    "named": false
+  },
+  {
+    "type": "sctp_socket",
     "named": false
   },
   {
@@ -1076,6 +1202,10 @@
   },
   {
     "type": "unix_stream_socket",
+    "named": false
+  },
+  {
+    "type": "user_namespace",
     "named": false
   },
   {

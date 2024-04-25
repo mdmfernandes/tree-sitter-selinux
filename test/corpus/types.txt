@@ -2,8 +2,13 @@
 Type declaration
 ================
 
-type basic_t;
-type basic_exec_t;
+type shell_exec_t;
+type bin_t;
+type bin_t alias { ls_exec_t sbin_t };
+type bin_t alias { sbin_t };
+type boolean_t, booleans_type;
+type setfiles_t alias restorecon_t, can_relabelto_binary_policy;
+type ssh_server_packet_t, packet_type, server_packet_type;
 
 ---
 
@@ -13,5 +18,293 @@ type basic_exec_t;
             (word)))
     (type_declaration
         (identifier
+            (word)))
+    (type_declaration
+        (identifier
+            (word))
+        (alias
+            (identifier
+                (word))
+            (identifier
+                (word))))
+    (type_declaration
+        (identifier
+            (word))
+        (alias
+            (identifier
+                (word))))
+    (type_declaration
+        (identifier
+            (word))
+        (identifier
+            (word)))
+    (type_declaration
+        (identifier
+            (word))
+        (alias
+            (identifier
+                (word)))
+        (identifier
+            (word)))
+    (type_declaration
+        (identifier
+            (word))
+        (identifier
+            (word))
+        (identifier
             (word))))
 
+=====================
+Attribute declaration
+=====================
+
+attribute domain;
+attribute non_security_file_type;
+
+---
+
+(source_file
+    (attribute_declaration
+        (identifier
+            (word)))
+    (attribute_declaration
+        (identifier
+            (word))))
+
+===========================
+Expand-attribute declaration
+===========================
+
+expandattribute domain true;
+expandattribute { false_attr other_attr } false;
+
+---
+
+(source_file
+    (expandattribute_declaration
+        (attribute
+            (identifier
+                (word)))
+        (boolean))
+    (expandattribute_declaration
+        (attribute
+            (identifier
+                (word))
+            (identifier
+                (word)))
+        (boolean)))
+
+==========================
+Type-attribute declaration
+==========================
+
+typeattribute setroubleshootd_t domain;
+typeattribute setroubleshootd_exec_t file_type, non_security_file_type;
+
+---
+
+(source_file
+    (typeattribute_declaration
+        (identifier
+            (word))
+        (identifier
+            (word)))
+    (typeattribute_declaration
+        (identifier
+            (word))
+        (identifier
+            (word))
+        (identifier
+            (word))))
+
+======================
+Type-alias declaration
+======================
+
+typealias mount_t alias mount_ntfs_t;
+typealias netif_t alias { lo_netif_t netif_lo_t };
+
+---
+
+(source_file
+    (typealias_declaration
+        (identifier
+            (word))
+        (alias
+            (identifier
+                (word))))
+    (typealias_declaration
+        (identifier
+            (word))
+        (alias
+            (identifier
+                (word))
+            (identifier
+                (word)))))
+
+======================
+Permissive declaration
+======================
+
+permissive unconfined_t;
+
+---
+
+(source_file
+    (permissive_declaration
+        (identifier
+            (word))))
+
+===========================
+Type-transition declaration
+===========================
+
+type_transition initrc_t acct_exec_t:process acct_t;
+type_transition { initrc_t acct_t } { var_log_t -test_t }:file wtmp_t;
+type_transition unconfined_t etc_t : file system_conf_t eric;
+
+---
+
+(source_file
+    (type_transition_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word)))
+    (type_transition_declaration
+        (type
+            (identifier
+                (word))
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word))
+            (negative)
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word)))
+    (type_transition_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word))
+        (identifier
+            (word))))
+
+=======================
+Type-change declaration
+=======================
+
+type_change auditadm_t sysadm_devpts_t:chr_file auditadm_devpts_t;
+type_change { staff_t -test_t} server_ptynode:chr_file staff_devpts_t;
+type_change staff_t { server_ptynode test_t }: { chr_file file } staff_devpts_t;
+
+---
+
+(source_file
+    (type_change_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word)))
+    (type_change_declaration
+        (type
+            (identifier
+                (word))
+            (negative)
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word)))
+    (type_change_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word))
+            (identifier
+                (word)))
+        (class
+            (classes)
+            (classes))
+        (identifier
+            (word))))
+
+=======================
+Type-member declaration
+=======================
+
+type_member sysadm_t user_home_dir_t:dir user_home_dir_t;
+type_member { sysadm_t -test_t} user_home_dir_t:{ dir file } user_home_dir_t;
+type_member sysadm_t { user_home_dir_t test_t } : dir user_home_dir_t;
+
+---
+
+(source_file
+    (type_member_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word)))
+    (type_member_declaration
+        (type
+            (identifier
+                (word))
+            (negative)
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word)))
+        (class
+            (classes)
+            (classes))
+        (identifier
+            (word)))
+    (type_member_declaration
+        (type
+            (identifier
+                (word)))
+        (type
+            (identifier
+                (word))
+            (identifier
+                (word)))
+        (class
+            (classes))
+        (identifier
+            (word))))

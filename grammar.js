@@ -29,11 +29,8 @@ module.exports = grammar({
 
     // TODO:
     // interface macro
-    // type_transition (should work for domains and objects)
     // User statements
     // Role statements: role, attribute_role, roleattribute, allow, role_transition
-    // Type statements: type, attribute, expandattribute, typeattribute, typealias, permissive, tye_transition,
-    //                  type_change, type_member
     // Bounds rules: typebounds
     // Extended rules
     // Object class
@@ -79,10 +76,8 @@ module.exports = grammar({
       seq(
         "type",
         field("type_id", $.identifier),
-        // TODO: add support for multiple alias, separated by {}
-        optional(seq("alias", field("alias_id", $.identifier))),
-        // TODO: add support for multiple attributes
-        optional(seq(",", field("attribute_id", $.identifier))),
+        optional(seq("alias", field("alias_id", $.alias))),
+        repeat(seq(",", field("attribute_id", $.identifier))),
         ";",
       ),
 
@@ -90,10 +85,9 @@ module.exports = grammar({
       seq("attribute", field("attribute_id", $.identifier), ";"),
 
     expandattribute_declaration: ($) =>
-      // TODO: add support for multiple attributes
       seq(
         "expandattribute",
-        field("attribute_id", $.identifier),
+        field("attribute_id", $.attribute),
         field("expand_value", $.boolean),
         ";",
       ),
@@ -102,8 +96,8 @@ module.exports = grammar({
       seq(
         "typeattribute",
         field("type_id", $.identifier),
-        // TODO: add support for multiple attributes
         field("attribute_id", $.identifier),
+        repeat(seq(",", field("attribute_id", $.identifier))),
         ";",
       ),
 
@@ -112,8 +106,7 @@ module.exports = grammar({
         "typealias",
         field("type_id", $.identifier),
         "alias",
-        // TODO: add support for multiple alias
-        field("alias_id", $.identifier),
+        field("alias_id", $.alias),
         ";",
       ),
 
@@ -123,42 +116,35 @@ module.exports = grammar({
     type_transition_declaration: ($) =>
       seq(
         "type_transition",
-        // TODO: add support for multiple types
-        field("source_type", $.identifier),
-        // TODO: add support for multiple types
-        field("target_type", $.identifier),
+        field("source_type", $.type),
+        field("target_type", $.type),
         ":",
-        // TODO: add support for multiple classes
-        field("class", $.classes),
+        field("class", $.class),
         field("default_type", $.identifier),
-        // WARN: This is causing conflict
-        // optional(field("object_name", $.identifier)),
+        optional(field("object_name", $.identifier)),
+        ";",
       ),
 
     type_change_declaration: ($) =>
       seq(
         "type_change",
-        // TODO: add support for multiple types
-        field("source_type", $.identifier),
-        // TODO: add support for multiple types
-        field("target_type", $.identifier),
+        field("source_type", $.type),
+        field("target_type", $.type),
         ":",
-        // TODO: add support for multiple classes
-        field("class", $.classes),
+        field("class", $.class),
         field("change_type", $.identifier),
+        ";",
       ),
 
     type_member_declaration: ($) =>
       seq(
         "type_member",
-        // TODO: add support for multiple types
-        field("source_type", $.identifier),
-        // TODO: add support for multiple types
-        field("target_type", $.identifier),
+        field("source_type", $.type),
+        field("target_type", $.type),
         ":",
-        // TODO: add support for multiple classes
-        field("class", $.classes),
+        field("class", $.class),
         field("member_type", $.identifier),
+        ";",
       ),
 
     /*
@@ -191,6 +177,20 @@ module.exports = grammar({
           "}",
         ),
         seq(optional($.complement), field("type", $.identifier)),
+      ),
+
+    // TODO: Maybe simplify this since I have multiple identical definitions
+    // (only difference is the name, which is not that relevant)
+    alias: ($) =>
+      choice(
+        seq("{", seq(repeat1(field("alias", $.identifier))), "}"),
+        field("alias", $.identifier),
+      ),
+
+    attribute: ($) =>
+      choice(
+        seq("{", seq(repeat1(field("attribute", $.identifier))), "}"),
+        field("attribute", $.identifier),
       ),
 
     permission: ($) =>
@@ -284,55 +284,86 @@ module.exports = grammar({
     rule_name: ($) => choice("allow", "auditallow", "dontaudit", "neverallow"),
 
     // I guess this is a bit overkill, but allows me to know if I'm using a valid class
-    // https://selinuxproject.org/page/ObjectClassesPerms
+    // From the SELinux Notebook
     classes: ($) =>
       choice(
+        "anon_inode",
         "appletalk_socket",
         "association",
+        "binder",
         "blk_file",
         "bpf",
-        "cap_userns",
         "cap2_userns",
+        "cap_userns",
         "capability",
         "capability2",
         "chr_file",
+        "context",
+        "db_blob",
+        "db_column",
+        "db_database",
+        "db_language",
+        "db_procedure",
+        "db_schema",
+        "db_sequence",
+        "db_table",
+        "db_tuple",
+        "db_view",
+        "dbus",
         "dccp_socket",
-        "dgram_socket_class_set",
         "dir",
         "fd",
         "fifo_file",
         "file",
         "filesystem",
+        "icmp_socket",
+        "infiniband_endport",
+        "infiniband_pkey",
+        "io_uring",
         "ipc",
         "kernel_service",
         "key",
         "key_socket",
         "lnk_file",
+        "lockdown",
         "memprotect",
         "msg",
         "msgq",
         "netif",
-        "netlink_socket",
         "netlink_audit_socket",
+        "netlink_connector_socket",
+        "netlink_crypto_socket",
         "netlink_dnrt_socket",
+        "netlink_fib_lookup_socket",
         "netlink_firewall_socket",
+        "netlink_generic_socket",
         "netlink_ip6fw_socket",
+        "netlink_iscsi_socket",
         "netlink_kobject_uevent_socket",
+        "netlink_netfilter_socket",
         "netlink_nflog_socket",
+        "netlink_rdma_socket",
         "netlink_route_socket",
+        "netlink_scsitransport_socket",
         "netlink_selinux_socket",
+        "netlink_socket",
         "netlink_tcpdiag_socket",
         "netlink_xfrm_socket",
         "node",
+        "nscd",
         "packet",
         "packet_socket",
+        "passwd",
         "peer",
+        "perf_event",
         "process",
         "process2",
+        "proxy",
         "rawip_socket",
+        "sctp_socket",
         "security",
-        "service",
         "sem",
+        "service",
         "shm",
         "sock_file",
         "socket",
@@ -342,16 +373,7 @@ module.exports = grammar({
         "udp_socket",
         "unix_dgram_socket",
         "unix_stream_socket",
-        "db_blob",
-        "db_column",
-        "db_database",
-        "db_procedure",
-        "db_table",
-        "db_tuple",
-        "dbus",
-        "context",
-        "nscd",
-        "passwd",
+        "user_namespace",
         "x_application_data",
         "x_client",
         "x_colormap",
