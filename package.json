@@ -1,7 +1,10 @@
 {
   "name": "tree-sitter-selinux",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Tree Sitter parser for SELinux",
+  "repository": "github:mdmfernandes/tree-sitter-selinux",
+  "author": "Miguel Fernandes <me@mdmfernandes.com",
+  "license": "MIT",
   "main": "index.js",
   "types": "bindings/node",
   "scripts": {
@@ -10,8 +13,6 @@
     "install": "node-gyp-build",
     "prebuildify": "prebuildify --napi --strip"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
@@ -41,9 +42,7 @@
       "scope": "source.selinux",
       "highlights": "queries/highlights.scm",
       "file-types": [
-        "if",
-        "te",
-        "fc"
+        "selinux"
       ]
     }
   ]
