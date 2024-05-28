@@ -90,6 +90,22 @@
     }
   },
   {
+    "type": "attribute_role_declaration",
+    "named": true,
+    "fields": {
+      "attribute_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "boolean",
     "named": true,
     "fields": {}
@@ -316,7 +332,7 @@
     "type": "role_declaration",
     "named": true,
     "fields": {
-      "name": {
+      "role_id": {
         "multiple": false,
         "required": true,
         "types": [
@@ -326,8 +342,96 @@
           }
         ]
       },
-      "type": {
+      "type_id": {
         "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "role_transition_declaration",
+    "named": true,
+    "fields": {
+      "class": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "classes",
+            "named": true
+          }
+        ]
+      },
+      "current_role_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "roles",
+            "named": true
+          }
+        ]
+      },
+      "new_role_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "roleattribute_declaration",
+    "named": true,
+    "fields": {
+      "attribute_id": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "role_id": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "roles",
+    "named": true,
+    "fields": {
+      "role": {
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -412,6 +516,10 @@
           "named": true
         },
         {
+          "type": "attribute_role_declaration",
+          "named": true
+        },
+        {
           "type": "boolean_declaration",
           "named": true
         },
@@ -433,6 +541,14 @@
         },
         {
           "type": "role_declaration",
+          "named": true
+        },
+        {
+          "type": "role_transition_declaration",
+          "named": true
+        },
+        {
+          "type": "roleattribute_declaration",
           "named": true
         },
         {
@@ -793,6 +909,10 @@
     "named": false
   },
   {
+    "type": "attribute_role",
+    "named": false
+  },
+  {
     "type": "auditallow",
     "named": false
   },
@@ -1118,6 +1238,14 @@
   },
   {
     "type": "role",
+    "named": false
+  },
+  {
+    "type": "role_transition",
+    "named": false
+  },
+  {
+    "type": "roleattribute",
     "named": false
   },
   {
