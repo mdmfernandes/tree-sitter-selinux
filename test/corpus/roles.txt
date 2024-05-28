@@ -1,0 +1,108 @@
+================
+Role declaration
+================
+
+role system_r;
+role user_r types user_t;
+role user_r types { var_log_t test_t };
+role user_r types { var_log_t -test_t };
+
+---
+
+(source_file
+    (role_declaration
+        (identifier
+            (word)))
+    (role_declaration
+        (identifier
+            (word))
+        (type
+        (identifier
+            (word))))
+    (role_declaration
+        (identifier
+            (word))
+        (type
+            (identifier
+                (word))
+            (identifier
+                (word))))
+    (role_declaration
+        (identifier
+            (word))
+        (type
+            (identifier
+                (word))
+            (negative)
+            (identifier
+                (word)))))
+
+==========================
+Attribute-role declaration
+==========================
+
+attribute_role role_list_1;
+attribute_role srole_list_2;
+
+---
+
+(source_file
+    (attribute_role_declaration
+        (identifier
+            (word)))
+    (attribute_role_declaration
+        (identifier
+            (word))))
+
+=========================
+roleattribute declaration
+=========================
+
+roleattribute service_r role_list_1;
+roleattribute service_r role_list_1, role_list_2;
+
+---
+
+(source_file
+    (roleattribute_declaration
+        (identifier
+            (word))
+        (identifier
+            (word)))
+    (roleattribute_declaration
+        (identifier
+            (word))
+        (identifier
+            (word))
+        (identifier
+            (word))))
+
+===========================
+Role-transition declaration
+===========================
+
+role_transition current_role_id type_id new_role_id;
+role_transition current_role_id type_id : dir new_role_id;
+
+---
+
+(source_file
+    (role_transition_declaration
+    (roles
+        (identifier
+            (word)))
+    (type
+        (identifier
+            (word)))
+    (identifier
+        (word)))
+    (role_transition_declaration
+    (roles
+        (identifier
+            (word)))
+    (type
+        (identifier
+            (word)))
+    (classes)
+    (identifier
+        (word))))

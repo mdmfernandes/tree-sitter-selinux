@@ -25,7 +25,7 @@ module.exports = grammar({
   rules: {
     // INFO:
     // gen_require inside macros
-    // highlit of `'. Match?
+    // highlight of `'. Match?
 
     // TODO:
     // interface macro
@@ -58,8 +58,13 @@ module.exports = grammar({
         $.type_transition_declaration,
         $.type_change_declaration,
         $.type_member_declaration,
-        // ...
+        // Role statements
         $.role_declaration,
+        $.attribute_role_declaration,
+        $.roleattribute_declaration,
+        //$.allow_declaration,
+        $.role_transition_declaration,
+        // ...
         $.rule_declaration,
         $.boolean_declaration,
       ),
@@ -69,9 +74,6 @@ module.exports = grammar({
     /*
      * Type statements
      */
-    // TODO: add tests for type statements. See examples in the SELinux notebook
-    // Improve the highlights
-
     type_declaration: ($) =>
       seq(
         "type",
@@ -148,15 +150,56 @@ module.exports = grammar({
       ),
 
     /*
-     * ...
+     * Role statements
      */
     role_declaration: ($) =>
       seq(
         "role",
-        field("name", $.identifier),
-        "types",
-        field("type", $.identifier),
+        field("role_id", $.identifier),
+        optional(seq("types", field("type_id", $.type))),
         ";",
+      ),
+
+    attribute_role_declaration: ($) =>
+      seq("attribute_role", field("attribute_id", $.identifier), ";"),
+
+    roleattribute_declaration: ($) =>
+      seq(
+        "roleattribute",
+        field("role_id", $.identifier),
+        field("attribute_id", $.identifier),
+        repeat(seq(",", field("attribute_id", $.identifier))),
+        ";",
+      ),
+
+    // INFO: Commented for now since it conflicts with the allow AV rule
+    //allow_declaration: ($) =>
+    //  seq(
+    //    "allow",
+    //    field("from_role_id", $.roles),
+    //    field("to_role_id", $.roles),
+    //    ";",
+    //  ),
+
+    // TODO: add more test-cases
+    role_transition_declaration: ($) =>
+      seq(
+        "role_transition",
+        field("current_role_id", $.roles),
+        field("type_id", $.type),
+        optional(seq(":", field("class", $.classes))),
+        field("new_role_id", $.identifier),
+        ";",
+      ),
+
+    /*
+     * ...
+     */
+
+    roles: ($) =>
+      choice(
+        seq("{", repeat1(field("role", $.identifier)), "}"),
+        field("role", $.identifier),
       ),
 
     class: ($) =>

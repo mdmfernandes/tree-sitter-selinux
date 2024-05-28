@@ -19,13 +19,15 @@
 
 [
   "alias"
+  "allow"
   "attribute"
+  "attribute_role"
   "bool"
   "expandattribute"
-  ; "dominance"
   "permissive"
   "role"
-  ; "roles"
+  "role_transition"
+  "roleattribute"
   "type"
   "type_change"
   "type_member"
@@ -33,7 +35,6 @@
   "typealias"
   "typeattribute"
   "types"
-  ; "user"
 ] @keyword
 
 "interface" @keyword.function
